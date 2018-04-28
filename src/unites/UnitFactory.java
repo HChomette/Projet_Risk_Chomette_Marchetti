@@ -1,6 +1,6 @@
 package unites;
 
-import plateau.Armee;
+import jeu.Armee;
 
 /**
  * Factory permettant la création des unités de ce package sans dépendance chez le créateur <br/>

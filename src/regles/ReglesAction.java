@@ -1,9 +1,9 @@
 package regles;
 
 import partie.IReglesAction;
-import partie.Joueur;
-import plateau.Armee;
-import plateau.Territoire;
+import jeu.Joueur;
+import jeu.Armee;
+import jeu.Territoire;
 
 import java.util.ArrayList;
 

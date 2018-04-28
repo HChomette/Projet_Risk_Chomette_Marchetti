@@ -1,4 +1,4 @@
-package partie;
+package jeu;
 
 /**
  * Joueur d'une partie de Risk

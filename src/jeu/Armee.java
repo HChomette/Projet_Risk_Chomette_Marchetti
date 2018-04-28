@@ -1,4 +1,4 @@
-package plateau;
+package jeu;
 
 /**
  * Classe abstraite représentant une armée sans type défini.<br/>

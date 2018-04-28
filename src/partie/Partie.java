@@ -1,8 +1,9 @@
 package partie;
 
-import plateau.Carte;
-import plateau.Region;
-import plateau.Territoire;
+import jeu.Carte;
+import jeu.Joueur;
+import jeu.Region;
+import jeu.Territoire;
 
 import java.util.ArrayList;
 

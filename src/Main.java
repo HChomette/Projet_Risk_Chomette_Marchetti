@@ -1,6 +1,6 @@
-import partie.Joueur;
+import jeu.Joueur;
 import partie.Partie;
-import plateau.Carte;
+import jeu.Carte;
 import regles.ReglesAction;
 
 /**

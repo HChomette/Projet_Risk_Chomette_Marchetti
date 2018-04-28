@@ -1,4 +1,4 @@
-package plateau;
+package jeu;
 
 import java.util.ArrayList;
 

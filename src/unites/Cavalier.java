@@ -1,6 +1,6 @@
 package unites;
 
-import plateau.Armee;
+import jeu.Armee;
 
 /**
  * Armée de type cavalier. Doit être créée par UnitFactory.
