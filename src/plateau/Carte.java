@@ -7,4 +7,8 @@ import java.util.ArrayList;
  */
 public class Carte {
 	private ArrayList<Region> regions;
+
+	public ArrayList<Region> getRegions() {
+		return regions;
+	}
 }

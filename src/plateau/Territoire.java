@@ -1,5 +1,7 @@
 package plateau;
 
+import partie.Joueur;
+
 import java.util.ArrayList;
 
 /**
@@ -9,5 +11,17 @@ public class Territoire {
 
 	private ArrayList<Territoire> voisins;
 	private ArrayList<Armee> armees;
+	private Joueur proprietaire; //Pour le moment j'ai mit comme ça, finalement ça me parait le plus pratique
 
+	public ArrayList<Territoire> getVoisins() {
+		return voisins;
+	}
+
+	public ArrayList<Armee> getArmees() {
+		return armees;
+	}
+
+	public Joueur getProprietaire() {
+		return proprietaire;
+	}
 }
