@@ -4,7 +4,6 @@ import jeu.Armee;
 
 /**
  * Factory permettant la création des unités de ce package sans dépendance chez le créateur <br/>
- * (Camille je sais pas si t'as déjà vu une factory, si tu vois pas à quoi ça sert je t'expliquerai c'est simple)
  */
 public class UnitFactory {
 

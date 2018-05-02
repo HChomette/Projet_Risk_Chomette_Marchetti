@@ -1,6 +1,6 @@
 import jeu.Joueur;
+import partie.MapLoader;
 import partie.Partie;
-import jeu.Carte;
 import regles.ReglesAction;
 
 /**
@@ -16,13 +16,14 @@ public class Main {
     	//Exemple d'utilisation
 
 
-		Partie p = new Partie(new Carte(), new ReglesAction());
+		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
 		//TODO : ajout des régions dans la map
 		p.addJoueur(new Joueur("Hector"));
 		p.addJoueur(new Joueur("Camille"));
 		p.addJoueur(new Joueur("Toufik"));
 		p.addJoueur(new Joueur("Hubert"));
 
+		System.out.println(p.getCarte());
 		//TODO : partie visuelle
 
 		for(Joueur j : p.getJoueurs()){
