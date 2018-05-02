@@ -22,6 +22,26 @@ public class ReglesAction implements IReglesAction {
 	@Override
 	public void deplacer(ArrayList<Armee> armees, Territoire origine, Territoire cible) {
 		//TODO
+
+		int taille = armees.size();
+		if(cible.getProprietaire != origine.getProprietaire){
+			//attaquer()
+		}else{
+			for (armees:armee) {
+				origine.removeArmee(armee);
+				cible.addArmee(armee);
+			}
+		}
+
+	}
+
+	public boolean isVoisin(Territoire origine, Territoire cible){
+		for (origine.getVoisins:voisin) {
+			if (voisin == cible){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
