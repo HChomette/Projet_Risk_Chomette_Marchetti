@@ -27,16 +27,20 @@ public class ReglesAction implements IReglesAction {
 		if(cible.getProprietaire != origine.getProprietaire){
 			//attaquer()
 		}else{
-			for (armees:armee) {
-				origine.removeArmee(armee);
-				cible.addArmee(armee);
+            if(isVoisin(origine,cible)) {
+			    for (Armee armee : armees) {
+                    origine.removeArmee(armee);
+                    cible.addArmee(armee);
+                }
+            }else{
+				    //afficher des trucs genre lol no possiblo
 			}
 		}
 
 	}
 
 	public boolean isVoisin(Territoire origine, Territoire cible){
-		for (origine.getVoisins:voisin) {
+		for (Voisin voisin : origine.getVoisins()) {
 			if (voisin == cible){
 				return true;
 			}
