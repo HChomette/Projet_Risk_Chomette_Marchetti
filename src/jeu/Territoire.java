@@ -32,7 +32,6 @@ public class Territoire {
 		this.proprietaire = j;
 	}
 
-
 	public void addArmee(Armee armee){
 		this.armees.add(armee);
 	}

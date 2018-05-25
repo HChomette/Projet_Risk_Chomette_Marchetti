@@ -24,10 +24,10 @@ public class ReglesAction implements IReglesAction {
 		//TODO
 
 		int taille = armees.size();
-		if(cible.getProprietaire != origine.getProprietaire){
+		if(cible.getProprietaire() != origine.getProprietaire()){
 			//attaquer()
 		}else{
-			for (armees:armee) {
+			for (Armee armee : armees) {
 				origine.removeArmee(armee);
 				cible.addArmee(armee);
 			}
@@ -36,7 +36,7 @@ public class ReglesAction implements IReglesAction {
 	}
 
 	public boolean isVoisin(Territoire origine, Territoire cible){
-		for (origine.getVoisins:voisin) {
+		for (Territoire voisin : origine.getVoisins()) {
 			if (voisin == cible){
 				return true;
 			}
