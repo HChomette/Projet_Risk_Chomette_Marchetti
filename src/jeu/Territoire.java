@@ -1,6 +1,7 @@
 package jeu;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Territoire de la carte du Risk
@@ -39,4 +40,5 @@ public class Territoire {
 	public void removeArmee(Armee armee){
 		this.armees.remove(armee);
 	}
+
 }

@@ -51,8 +51,6 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-.idea/Projet_Risk_Chomette_Marchetti.iml
-.idea/inspectionProfiles/
-.idea/modules.xml
-.idea/sonarlint/
-.idea/workspace.xml
+.idea
+
+Projet_Risk_Chomette_Marchetti.iml

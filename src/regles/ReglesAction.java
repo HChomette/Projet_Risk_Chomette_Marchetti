@@ -6,6 +6,7 @@ import jeu.Armee;
 import jeu.Territoire;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Classe regroupant les règles de résolution de conflit et les traitant de manière statique. <br/>
@@ -21,18 +22,51 @@ public class ReglesAction implements IReglesAction {
 	 */
 	@Override
 	public void deplacer(ArrayList<Armee> armees, Territoire origine, Territoire cible) {
-		//TODO
-
 		int taille = armees.size();
-		if(cible.getProprietaire() != origine.getProprietaire()){
-			//attaquer()
-		}else{
-			for (Armee armee : armees) {
-				origine.removeArmee(armee);
-				cible.addArmee(armee);
+		if (origine.getArmees().size() - armees.size() <= 1) {
+			System.out.println("il doit rester au moins 1 armée sur le territoire d'origine");
+		} else {
+			if (isVoisin(origine, cible)) {
+				if (cible.getProprietaire() != origine.getProprietaire()) {
+					//attaquer()
+				} else {
+					this.bouger(armees,origine,cible);
+				}
+			} else {
+				System.out.println("Vous ne pouvez pas vous déplacer sur un territoire non voisin");
+				//afficher des trucs genre lol no possiblo
 			}
 		}
+	}
 
+	public void bouger(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+		for (Armee armee : armees) {
+			if (armee.getMouvement() > 0) {
+				origine.removeArmee(armee);
+				cible.addArmee(armee);
+				armee.setMouvement(armee.getMouvement() - 1);
+				System.out.println(armee.getNom() + " a été déplacé avec succès !");
+			} else {
+				System.out.println("le " + armee.getNom() + " n'a pas pu être déplacé (plus de mouvements disponibles");
+			}
+		}
+	}
+	public int de(int min, int max){
+		Random rd = new Random();
+		return rd.nextInt(max - min + 1)+min;
+	}
+
+	public int attaque(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+		if(armees.size()>3){
+			System.out.println("Vous ne pouvez pas attaquer avec plus de 3 armées");
+			return -1;
+		}else{
+			for(Armee armee:armees){
+				armee.setScore(de(armee.getPuissanceMin(),armee.getPuissanceMax()));
+			}
+			//je sais pas encore selectionner les 1 ou 2 defenseurs cibles en fonction des priorites defenses
+		}
+		return -1;
 	}
 
 	public boolean isVoisin(Territoire origine, Territoire cible){
@@ -43,6 +77,8 @@ public class ReglesAction implements IReglesAction {
 		}
 		return false;
 	}
+
+
 
 	/**
 	 * Calcule la quantité d'armées de renforts reçues par un joueur en début de tour

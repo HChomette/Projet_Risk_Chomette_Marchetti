@@ -1,5 +1,7 @@
 package jeu;
 
+import java.util.Comparator;
+
 /**
  * Classe abstraite représentant une armée sans type défini.<br/>
  * Toute unité doit posséder ces mêmes caractéristiques
@@ -14,6 +16,7 @@ public abstract class Armee {
 	private int prioriteAtt;
 	private int prioriteDef;
 	private int mouvement;
+	private int score;
 
 	//////////////////
 	// CONSTRUCTORS //
@@ -27,6 +30,7 @@ public abstract class Armee {
 		this.prioriteAtt = prioriteAtt;
 		this.prioriteDef = prioriteDef;
 		this.mouvement = mouvement;
+		this.score = 0;
 	}
 
 	///////////////////////
@@ -61,4 +65,52 @@ public abstract class Armee {
 	public int getMouvement() {
 		return mouvement;
 	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public void setCout(int cout) {
+		this.cout = cout;
+	}
+
+	public void setPuissanceMin(int puissanceMin) {
+		this.puissanceMin = puissanceMin;
+	}
+
+	public void setPuissanceMax(int puissanceMax) {
+		this.puissanceMax = puissanceMax;
+	}
+
+	public void setPrioriteAtt(int prioriteAtt) {
+		this.prioriteAtt = prioriteAtt;
+	}
+
+	public void setPrioriteDef(int prioriteDef) {
+		this.prioriteDef = prioriteDef;
+	}
+
+	public void setMouvement(int mouvement) {
+		this.mouvement = mouvement;
+	}
+
+	public int getMouvementMax(){
+		return -1;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public void initializeScore() {
+		this.score = 0;
+	}
+
+
+
+
 }
