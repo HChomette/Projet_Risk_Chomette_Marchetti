@@ -8,17 +8,13 @@ import java.util.Comparator;
  */
 public class Territoire {
 
-	private ArrayList<Territoire> voisins;
 	private ArrayList<Armee> armees;
 	private Joueur proprietaire; //Pour le moment j'ai mis comme ça, finalement ça me parait le plus pratique
+	private int numero;
 
-	public Territoire(){
-		this.voisins = new ArrayList<>();
+	public Territoire(int numero){
 		this.armees = new ArrayList<>();
-	}
-
-	public ArrayList<Territoire> getVoisins() {
-		return voisins;
+		this.numero = numero;
 	}
 
 	public ArrayList<Armee> getArmees() {
@@ -39,6 +35,12 @@ public class Territoire {
 
 	public void removeArmee(Armee armee){
 		this.armees.remove(armee);
+	}
+
+	public int getNumero(){return numero;}
+
+	public String toString(){
+		return Integer.toString(numero);
 	}
 
 }

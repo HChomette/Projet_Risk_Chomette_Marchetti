@@ -1,6 +1,7 @@
 package partie;
 
 import jeu.Armee;
+import jeu.Carte;
 import jeu.Joueur;
 import jeu.Territoire;
 
@@ -26,4 +27,10 @@ public interface IReglesAction {
 	 * @return le nombre d'armées de renforts
 	 */
 	int renforts(Joueur j);
+
+	/**
+	 * Donne la carte de la partie à la classe
+	 * @param carte la carte utilisée
+	 */
+	void setCarte(Carte carte);
 }

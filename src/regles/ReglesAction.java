@@ -1,5 +1,6 @@
 package regles;
 
+import jeu.Carte;
 import partie.IReglesAction;
 import jeu.Joueur;
 import jeu.Armee;
@@ -13,6 +14,9 @@ import java.util.Random;
  * Cette classe correspond aux règles de base de l'énoncé.
  */
 public class ReglesAction implements IReglesAction {
+
+	private static Carte carte;
+
 	/**
 	 * Deplace des armées d'un point d'origine à un point de destination, et résout les conflits si nécessaire
 	 *
@@ -26,7 +30,7 @@ public class ReglesAction implements IReglesAction {
 		if (origine.getArmees().size() - armees.size() <= 1) {
 			System.out.println("il doit rester au moins 1 armée sur le territoire d'origine");
 		} else {
-			if (isVoisin(origine, cible)) {
+			if (isVoisin(origine, cible, carte)) {
 				if (cible.getProprietaire() != origine.getProprietaire()) {
 					//attaquer()
 				} else {
@@ -69,13 +73,8 @@ public class ReglesAction implements IReglesAction {
 		return -1;
 	}
 
-	public boolean isVoisin(Territoire origine, Territoire cible){
-		for (Territoire voisin : origine.getVoisins()) {
-			if (voisin == cible){
-				return true;
-			}
-		}
-		return false;
+	public boolean isVoisin(Territoire origine, Territoire cible, Carte carte){
+		return carte.areVoisins(origine.getNumero(), cible.getNumero());
 	}
 
 
@@ -90,5 +89,10 @@ public class ReglesAction implements IReglesAction {
 	public int renforts(Joueur j) {
 		//TODO
 		return 0;
+	}
+
+	@Override
+	public void setCarte(Carte c){
+		carte = c;
 	}
 }
