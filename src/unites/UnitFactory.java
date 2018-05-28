@@ -2,6 +2,8 @@ package unites;
 
 import jeu.Armee;
 
+import java.util.ArrayList;
+
 /**
  * Factory permettant la création des unités de ce package sans dépendance chez le créateur <br/>
  */
@@ -24,5 +26,18 @@ public class UnitFactory {
 			return new Soldat();
 
 		return null; //Si aucun type ne correspond
+	}
+
+	/**
+	 * Renvoie une liste contenant tous les types pouvant être instanciés par la factory. <br/>
+	 * La classe cliente peut donc afficher à l'utilisateur la liste des types qu'il peut créer, sans dépendance.
+	 * @return Liste complète des types
+	 */
+	public static ArrayList<String> getTypes(){
+		ArrayList<String> res = new ArrayList<>();
+		res.add("Canon");
+		res.add("Cavalier");
+		res.add("Soldat");
+		return res;
 	}
 }
