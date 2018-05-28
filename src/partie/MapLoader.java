@@ -4,12 +4,14 @@ import jeu.Carte;
 
 import jeu.Region;
 import jeu.Territoire;
+import localisation.Point;
 import org.json.*;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.stream.Stream;
+import java.util.ArrayList;
 
 /**
  * Classe chargeant une map à partir d'un fichier JSON.
@@ -65,5 +67,21 @@ public class MapLoader {
 		}
 
 		return adjacence;
+	}
+
+	public static ArrayList<Point> loadLocalisations(String path){
+		ArrayList<Point> localisations = new ArrayList<>();
+
+		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+			for(String line; (line = br.readLine()) != null; ) {
+				double x = Double.parseDouble(line.substring(0, 5));
+				double y = Double.parseDouble(line.substring(6, 11));
+				localisations.add(new Point(x, y));
+			}
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+
+		return localisations;
 	}
 }

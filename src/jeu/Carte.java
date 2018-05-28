@@ -1,5 +1,7 @@
 package jeu;
 
+import localisation.Point;
+
 import java.util.ArrayList;
 
 /**
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 public class Carte {
 	private ArrayList<Region> regions;
 	private boolean[][] adjacence;
+	private ArrayList<Point> localisations;
 
 	public Carte(){
 		this.regions = new ArrayList<>();
@@ -22,7 +25,7 @@ public class Carte {
 	}
 
 	/**
-	 * Renvoie le territoite de numéro donné
+	 * Renvoie le territoire de numéro donné
 	 * @param numero numéro du territoire
 	 * @return Le territoire de numéro recherché
 	 */
@@ -38,20 +41,6 @@ public class Carte {
 		return null;
 	}
 
-	public boolean areVoisins(int num1, int num2){
-		return adjacence[num1][num2];
-	}
-
-	public void setAdjacence(boolean[][] adjacence){
-		this.adjacence = adjacence;
-	}
-
-	public String toString(){
-		String res = "";
-		for(Region r : regions) res += r.toString();
-		return res;
-	}
-
 	/**
 	 * Méthode de test pour vérifier que la matrice est symétrique
 	 */
@@ -62,5 +51,43 @@ public class Carte {
 					System.out.println("Erreur : " + (i + 1) + " - " + (j + 1));
 			}
 		}
+	}
+
+	/**
+	 * Retourne le territoire dans lequel l'utilisateur a cliqué <br/>
+	 * Si aucun territoire n'est visé, retourne null
+	 * @param x abscisse du clic
+	 * @param y ordonnée du clic
+	 * @return Le territoire cible
+	 */
+	public Territoire getTarget(double x, double y){
+		for(int i = 0; i < localisations.size(); i++){
+			if(localisations.get(i).isIn(x, y)){
+				return getTerritoire(i);
+			}
+		}
+		return null;
+	}
+
+	public boolean areVoisins(int num1, int num2){
+		return adjacence[num1][num2];
+	}
+
+	public void setAdjacence(boolean[][] adjacence){
+		this.adjacence = adjacence;
+	}
+
+	public void setLocalisations(ArrayList<Point> localisations){
+		this.localisations = localisations;
+	}
+
+	public ArrayList<Point> getLocalisations() {
+		return localisations;
+	}
+
+	public String toString(){
+		String res = "";
+		for(Region r : regions) res += r.toString();
+		return res;
 	}
 }
