@@ -1,13 +1,11 @@
 import edu.princeton.cs.introcs.StdDraw;
 import jeu.Joueur;
-import jeu.Territoire;
 import localisation.Point;
 import partie.MapLoader;
 import partie.Partie;
 import regles.ReglesAction;
-import unites.UnitFactory;
 
-import java.util.ArrayList;
+import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -22,28 +20,34 @@ public class Main {
 
     	//Exemple d'utilisation
 
-
 		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
 		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence", 42));
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
 
-		p.addJoueur(new Joueur("Hector"));
-		p.addJoueur(new Joueur("Camille"));
-		p.addJoueur(new Joueur("Toufik"));
-		p.addJoueur(new Joueur("Hubert"));
-
-
 		System.out.println(p.getCarte());
-		//TODO : partie visuelle
 
-		//StdDraw.setXscale(0, 300);
-		//StdDraw.setYscale(0,300);
 		StdDraw.setCanvasSize(1200, 614);
 		StdDraw.picture(0.5, 0.5, "resources/riskmap.png");
+		StdDraw.setPenRadius(0.005);
+
 
 		for(Point point : p.getCarte().getLocalisations()){
 			StdDraw.circle(point.getX(), point.getY(), Point.getRadius());
 		}
+
+		String[] choices = {"2", "3", "4", "5", "6"};
+
+		int res = Integer.parseInt((String)JOptionPane.showInputDialog(JOptionPane.getRootFrame(), "Combien de joueurs ?", "Initialisation", JOptionPane.PLAIN_MESSAGE, null, choices, "2"));
+
+		for(int i = 0; i < res; i++){
+			String name = null;
+			while(name == null) {
+				name = JOptionPane.showInputDialog("Entrez le nom du joueur " + (i + 1));
+				p.addJoueur(new Joueur(name));
+			}
+		}
+
+		System.out.println(p.getJoueurs());
 
 		while(true){
 			if(StdDraw.isMousePressed()){
