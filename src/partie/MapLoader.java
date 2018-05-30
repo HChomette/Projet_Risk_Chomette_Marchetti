@@ -47,6 +47,12 @@ public class MapLoader {
 		return mainMap;
 	}
 
+	/**
+	 * Charge la matrice d'adjacence de la carte
+	 * @param path chemin du fichier
+	 * @param length nombre de territoires
+	 * @return matrice d'adjacence
+	 */
 	public static boolean[][] loadAdjacence(String path, int length){
 		boolean[][] adjacence = new boolean[length][length];
 
@@ -69,6 +75,11 @@ public class MapLoader {
 		return adjacence;
 	}
 
+	/**
+	 * Charge les localisations x et y des territoires à partir d'un fichier
+	 * @param path chemin du fichier
+	 * @return Liste des points de localisation des territoires
+	 */
 	public static ArrayList<Point> loadLocalisations(String path){
 		ArrayList<Point> localisations = new ArrayList<>();
 

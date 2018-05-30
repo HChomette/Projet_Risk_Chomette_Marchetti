@@ -4,6 +4,7 @@ import localisation.Point;
 import partie.MapLoader;
 import partie.Partie;
 import regles.ReglesAction;
+import visuel.CarteManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,15 +12,14 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Projet de jeu de Risk simplifié. <br/>
- * Classe principale.
- * @author Camille Marhetti, Hector Chomette
+ * Classe principale. Gère la boucle de jeu et le visuel.
+ * @author Camille Marchetti, Hector Chomette
  */
 
 public class Main {
 
     public static void main(String[] args) {
     	double xScale = 1200f/614f;
-    	double yScale = 1;
 
     	//Chargement des fichiers
 		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
@@ -27,18 +27,12 @@ public class Main {
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
 
 		//Affichage de la carte
-		StdDraw.setCanvasSize(1200, 614);
-		StdDraw.picture(0.5, 0.5, "resources/riskmap.png");
-		StdDraw.setPenRadius(0.005);
-		StdDraw.setYscale(0, yScale);
-		StdDraw.setXscale(0, xScale);
+		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", 1200, 614);
 
 		//Dessin du cercle de chaque territoire
 		for(Point point : p.getCarte().getLocalisations()){
-			StdDraw.setPenColor(Color.BLACK);
-			StdDraw.filledCircle(point.getX() * xScale, point.getY() * yScale, Point.getRadius() * 1.2);
-			StdDraw.setPenColor(Color.WHITE);
-			StdDraw.filledCircle(point.getX() * xScale, point.getY() * yScale, Point.getRadius());
+			CarteManager.dessineCercle(Color.BLACK, point.getX() * xScale, point.getY(), Point.getRadius() * 1.2);
+			CarteManager.dessineCercle(Color.WHITE, point.getX() * xScale, point.getY(), Point.getRadius());
 		}
 
 		//Initialisation des joueurs & de leur nombre
@@ -53,6 +47,16 @@ public class Main {
 				p.addJoueur(new Joueur(name));
 			}
 		}
+
+		//Répartition des territoires au différents joueurs
+		//TODO
+		//TEST
+		p.getCarte().getTerritoire(2).setProprietaire(p.getJoueur(1));
+		Point point = p.getCarte().getLocalisation(2);
+		CarteManager.dessineCercle(CarteManager.getColor(1), point.getX() * xScale, point.getY(), Point.getRadius());
+		p.getCarte().getTerritoire(23).setProprietaire(p.getJoueur(0));
+		point = p.getCarte().getLocalisation(23);
+		CarteManager.dessineCercle(CarteManager.getColor(0), point.getX() * xScale, point.getY(), Point.getRadius());
 
 		//TEST UNIQUEMENT
 		while(true){

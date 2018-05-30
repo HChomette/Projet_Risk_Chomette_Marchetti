@@ -73,6 +73,10 @@ public class Partie {
 		return joueurs;
 	}
 
+	public Joueur getJoueur(int i){
+		return joueurs.get(i);
+	}
+
 	public IReglesAction getRegles() {
 		return regles;
 	}

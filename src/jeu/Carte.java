@@ -85,6 +85,10 @@ public class Carte {
 		return localisations;
 	}
 
+	public Point getLocalisation(int i){
+		return localisations.get(i);
+	}
+
 	public String toString(){
 		String res = "";
 		for(Region r : regions) res += r.toString();
