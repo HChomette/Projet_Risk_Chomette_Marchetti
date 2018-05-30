@@ -6,6 +6,7 @@ import partie.Partie;
 import regles.ReglesAction;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,24 +18,30 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) {
+    	double xScale = 1200f/614f;
+    	double yScale = 1;
 
-    	//Exemple d'utilisation
-
+    	//Chargement des fichiers
 		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
 		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence", 42));
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
 
-		System.out.println(p.getCarte());
-
+		//Affichage de la carte
 		StdDraw.setCanvasSize(1200, 614);
 		StdDraw.picture(0.5, 0.5, "resources/riskmap.png");
 		StdDraw.setPenRadius(0.005);
+		StdDraw.setYscale(0, yScale);
+		StdDraw.setXscale(0, xScale);
 
-
+		//Dessin du cercle de chaque territoire
 		for(Point point : p.getCarte().getLocalisations()){
-			StdDraw.circle(point.getX(), point.getY(), Point.getRadius());
+			StdDraw.setPenColor(Color.BLACK);
+			StdDraw.filledCircle(point.getX() * xScale, point.getY() * yScale, Point.getRadius() * 1.2);
+			StdDraw.setPenColor(Color.WHITE);
+			StdDraw.filledCircle(point.getX() * xScale, point.getY() * yScale, Point.getRadius());
 		}
 
+		//Initialisation des joueurs & de leur nombre
 		String[] choices = {"2", "3", "4", "5", "6"};
 
 		int res = Integer.parseInt((String)JOptionPane.showInputDialog(JOptionPane.getRootFrame(), "Combien de joueurs ?", "Initialisation", JOptionPane.PLAIN_MESSAGE, null, choices, "2"));
@@ -47,8 +54,7 @@ public class Main {
 			}
 		}
 
-		System.out.println(p.getJoueurs());
-
+		//TEST UNIQUEMENT
 		while(true){
 			if(StdDraw.isMousePressed()){
 				System.out.println(StdDraw.mouseX() + " - " + StdDraw.mouseY());
