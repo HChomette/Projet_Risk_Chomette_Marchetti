@@ -1,7 +1,5 @@
 package jeu;
 
-import java.util.Comparator;
-
 /**
  * Classe abstraite représentant une armée sans type défini.<br/>
  * Toute unité doit posséder ces mêmes caractéristiques
@@ -22,7 +20,7 @@ public abstract class Armee {
 	// CONSTRUCTORS //
 	//////////////////
 
-	public Armee(String nom, int cout, int puissanceMin, int puissanceMax, int prioriteAtt, int prioriteDef, int mouvement) {
+	protected Armee(String nom, int cout, int puissanceMin, int puissanceMax, int prioriteAtt, int prioriteDef, int mouvement) {
 		this.nom = nom;
 		this.cout = cout;
 		this.puissanceMin = puissanceMin;

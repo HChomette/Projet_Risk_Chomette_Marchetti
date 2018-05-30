@@ -15,15 +15,14 @@ public class UnitFactory {
 	 * @return la nouvelle armée du type demandé
 	 */
 	public static Armee getArmee(String nomType){
-
-		if(nomType.equals("Canon"))
-			return new Canon();
-
-		else if(nomType.equals("Cavalier"))
-			return new Cavalier();
-
-		else if(nomType.equals("Soldat"))
-			return new Soldat();
+		switch (nomType){
+			case "Canon" :
+				return new Canon();
+			case "Cavalier" :
+				return new Cavalier();
+			case "Soldat" :
+				return new Cavalier();
+		}
 
 		return null; //Si aucun type ne correspond
 	}

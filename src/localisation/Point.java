@@ -2,7 +2,7 @@ package localisation;
 
 public class Point {
 
-	private static double radius = 0.02;
+	private final static double radius = 0.02;
 	private double x;
 	private double y;
 

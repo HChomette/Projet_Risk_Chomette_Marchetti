@@ -1,7 +1,6 @@
 package jeu;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 /**
  * Territoire de la carte du Risk

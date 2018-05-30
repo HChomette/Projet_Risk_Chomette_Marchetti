@@ -9,7 +9,7 @@ import java.awt.*;
  */
 public class CarteManager {
 
-	private static Color[] couleursJoueur = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.PINK};
+	private final static Color[] couleursJoueur = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.PINK};
 
 	/**
 	 * Dessine un cercle de territoire.

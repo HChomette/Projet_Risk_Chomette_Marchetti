@@ -26,6 +26,8 @@ public class Main {
 		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence", 42));
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
 
+		System.out.println(p.getCarte());
+
 		//Affichage de la carte
 		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", 1200, 614);
 

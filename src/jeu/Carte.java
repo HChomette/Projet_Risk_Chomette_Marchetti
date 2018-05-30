@@ -90,8 +90,8 @@ public class Carte {
 	}
 
 	public String toString(){
-		String res = "";
-		for(Region r : regions) res += r.toString();
-		return res;
+		StringBuilder sb = new StringBuilder();
+		for(Region r : regions) sb.append(r.toString());
+		return sb.toString();
 	}
 }

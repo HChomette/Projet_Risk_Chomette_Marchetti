@@ -60,11 +60,7 @@ public class MapLoader {
 			int lineCounter = 0;
 			for(String line; (line = br.readLine()) != null; ) {
 				for(int i = 0; i < line.length(); i++){
-					if(line.charAt(i) == '1'){
-						adjacence[lineCounter][i] = true;
-					} else {
-						adjacence[lineCounter][i] = false;
-					}
+					adjacence[lineCounter][i] = (line.charAt(i) == '1');
 				}
 				lineCounter++;
 			}
