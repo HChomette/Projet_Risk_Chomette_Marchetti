@@ -6,6 +6,7 @@ import jeu.Region;
 import jeu.Territoire;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Classe principale gérant l'ensemble d'une partie de Risk
@@ -58,6 +59,19 @@ public class Partie {
 			}
 		}
 		return res;
+	}
+
+	public void distributionTerritoires(){
+		ArrayList<Territoire> territoires = new ArrayList<>();
+		for (Region r :this.carte.getRegions() ) {
+			territoires.addAll(r.getTerritoires());
+		}
+		Collections.shuffle(territoires);
+		int i = 0;
+		for (Territoire t : territoires) {
+			t.setProprietaire(this.joueurs.get(i % this.joueurs.size()));
+			i ++;
+		}
 	}
 
 	///////////////////////

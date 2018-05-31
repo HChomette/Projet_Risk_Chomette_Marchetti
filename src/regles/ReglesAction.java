@@ -91,7 +91,7 @@ public class ReglesAction implements IReglesAction {
 		r = r + nombreRenfortsRegion(j);
 		//pour les victoires
 		for(int i = 1; i <= j.getNbConquetes() ; i ++){
-			r = r + de(0,1) * 1;
+			r = r + de(0,1) ;
 		}
 		return r;
 	}
