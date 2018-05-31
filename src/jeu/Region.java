@@ -30,4 +30,23 @@ public class Region {
 	public String toString(){
 		return nom + " : " + territoires.size() + " territoires.";
 	}
+
+	public boolean estControleePar(Joueur j){
+		for (Territoire t:this.territoires) {
+			if(t.getProprietaire()!=j){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public int nombreTerritoires(Joueur j){
+	    int i = 0;
+	    for(Territoire t:this.territoires){
+	        if(t.getProprietaire()==j){
+	            i++;
+            }
+        }
+        return i;
+    }
 }
