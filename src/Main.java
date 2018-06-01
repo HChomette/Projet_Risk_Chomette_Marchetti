@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) {
-    	/*
+
     	Joueur j1 = new Joueur("Camille");
     	Joueur j2 = new Joueur("Hector");
 
@@ -68,8 +68,8 @@ public class Main {
 
 
 
-		*/
 
+    	/*
     	double xScale = 1200f/614f;
 
     	//Chargement des fichiers
@@ -141,7 +141,7 @@ public class Main {
 			} catch (InterruptedException e){
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 
 /*

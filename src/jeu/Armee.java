@@ -121,7 +121,7 @@ public abstract class Armee {
 			//return rollno2-rollno1;
 		}};
 
-	public static Comparator<Armee> SortByScore = new Comparator<Armee>() {
+	public static Comparator<Armee> SortAttaque = new Comparator<Armee>() {
 
 		public int compare(Armee s1, Armee s2) {
 
@@ -132,8 +132,13 @@ public abstract class Armee {
 			//return rollno1-rollno2;
 
 			/*For descending order*/
-			return rollno2-rollno1;
-		}};
+			if(rollno1 == rollno2){
+				return s1.getPrioriteAtt() - s2.getPrioriteAtt();
+			}else {
+				return rollno2 - rollno1;
+			}
+
+			}};
 
 
 

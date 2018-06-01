@@ -43,7 +43,18 @@ public class ReglesAction implements IReglesAction {
 		}
 	}
 
+	/**
+	 * Armee attaque un territoire
+	 * @param armees pour l'attaque
+	 * @param origine
+	 * @param cible
+	 */
 	public void attaquer(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+		for(Armee a : armees){
+			if(a.getMouvement()<=0){
+				System.out.println("cette armée n'a pas assez de points de mouvement pour se déplacer");
+			}
+		}
 		if (origine.getArmees().size() - armees.size() < 1) {
 			System.out.println("il doit rester au moins 1 armée sur le territoire d'origine");
 		} else {
@@ -62,7 +73,7 @@ public class ReglesAction implements IReglesAction {
 				}
 				//lancer des des
 				for(Armee armee:armees){
-					armee.setScore(1);
+					armee.setScore(/*de(armee.getPuissanceMin(),armee.getPuissanceMax())*/1);
 					System.out.println("score attaque :"+armee.getScore());
 				}
 				for(Armee armee : defenseurs){
@@ -71,8 +82,9 @@ public class ReglesAction implements IReglesAction {
 				}
 
 				//tri et comparaison des scores
-				Collections.sort(armees, Armee.SortByScore);
-				Collections.sort(defenseurs, Armee.SortByScore);
+				Collections.sort(armees, Armee.SortAttaque);
+				System.out.println(armees);
+				Collections.sort(defenseurs, Armee.SortAttaque);
 
 				//comparaison des premiers scores
 				if(armees.get(0).getScore()>=defenseurs.get(0).getScore()){
@@ -103,12 +115,21 @@ public class ReglesAction implements IReglesAction {
 		}
 	}
 
+	/**
+	 * Capture un territoire attaqué qui n'a plus de défenseur
+	 * @param armees
+	 * @param origine
+	 * @param cible
+	 */
 
 	public void capture(ArrayList<Armee> armees, Territoire origine, Territoire cible){
 		cible.setProprietaire(origine.getProprietaire());
 		origine.removeAllArmee(armees);
 		cible.addAllArmee(armees);
 		origine.getProprietaire().addConquete();
+		for(Armee a :armees){
+			a.setMouvement(a.getMouvement() - 1);
+		}
 		System.out.println("territoire capturé");
 	}
 
