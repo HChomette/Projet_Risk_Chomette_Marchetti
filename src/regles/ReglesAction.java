@@ -5,6 +5,7 @@ import partie.IReglesAction;
 import unites.UnitFactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -14,6 +15,8 @@ import java.util.Random;
 public class ReglesAction implements IReglesAction {
 
 	private static Carte carte;
+
+
 
 	/**
 	 * Deplace des armées d'un point d'origine à un point de destination, et résout les conflits si nécessaire
@@ -41,11 +44,72 @@ public class ReglesAction implements IReglesAction {
 	}
 
 	public void attaquer(ArrayList<Armee> armees, Territoire origine, Territoire cible){
-		if(armees.size()>=3){
-			System.out.println("Vous ne pouvez pas attaquer avec plus de 3 unités");
-		}else{
-			ArrayList<Armee> defenseurs = new ArrayList<>();
+		if (origine.getArmees().size() - armees.size() < 1) {
+			System.out.println("il doit rester au moins 1 armée sur le territoire d'origine");
+		} else {
+
+			if (armees.size() > 3) {
+				System.out.println("Vous ne pouvez pas attaquer avec plus de 3 unités");
+			}else if(armees.size()==0){
+				System.out.println("Vous devez attaquer avec au moins une armee");
+			}else {
+				//choix des armées de défense sur le territoire cible
+				Collections.sort(cible.getArmees(), Armee.SortByPrioriteDefense);
+				ArrayList<Armee> defenseurs = new ArrayList<>();
+				defenseurs.add(cible.getArmees().get(0));
+				if(cible.getArmees().size()>=2){
+					defenseurs.add(cible.getArmees().get(1));
+				}
+				//lancer des des
+				for(Armee armee:armees){
+					armee.setScore(1);
+					System.out.println("score attaque :"+armee.getScore());
+				}
+				for(Armee armee : defenseurs){
+					armee.setScore(de(armee.getPuissanceMin(),armee.getPuissanceMax()));
+					System.out.println("score defense :"+armee.getScore());
+				}
+
+				//tri et comparaison des scores
+				Collections.sort(armees, Armee.SortByScore);
+				Collections.sort(defenseurs, Armee.SortByScore);
+
+				//comparaison des premiers scores
+				if(armees.get(0).getScore()>=defenseurs.get(0).getScore()){
+					System.out.println("defenseur mort");
+					cible.removeArmee(defenseurs.get(0));
+				}else{
+					System.out.println("attaquant mort");
+					cible.removeArmee(armees.get(0));
+					armees.remove(armees.get(0));
+				}
+				//comparaison des deuxieme scores si il y en a
+				if(armees.size()>=2 && defenseurs.size()==2){
+					if(armees.get(1).getScore()>=defenseurs.get(1).getScore()){
+						System.out.println("defenseur mort");
+						cible.removeArmee(defenseurs.get(1));
+					}else{
+						System.out.println("attaquant mort");
+						cible.removeArmee(defenseurs.get(1));
+						armees.remove(armees.get(1));
+					}
+				}
+				//si il ne reste plus de defenseurs, on fait une capture
+				if(cible.getArmees().size()==0){
+					capture(armees, origine, cible);
+				}
+
+			}
 		}
+	}
+
+
+	public void capture(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+		cible.setProprietaire(origine.getProprietaire());
+		origine.removeAllArmee(armees);
+		cible.addAllArmee(armees);
+		origine.getProprietaire().addConquete();
+		System.out.println("territoire capturé");
 	}
 
 	public void bouger(ArrayList<Armee> armees, Territoire origine, Territoire cible){
@@ -65,18 +129,7 @@ public class ReglesAction implements IReglesAction {
 		return rd.nextInt(max - min + 1)+min;
 	}
 
-	public int attaque(ArrayList<Armee> armees, Territoire origine, Territoire cible){
-		if(armees.size()>3){
-			System.out.println("Vous ne pouvez pas attaquer avec plus de 3 armées");
-			return -1;
-		}else{
-			for(Armee armee:armees){
-				armee.setScore(de(armee.getPuissanceMin(),armee.getPuissanceMax()));
-			}
-			//je sais pas encore selectionner les 1 ou 2 defenseurs cibles en fonction des priorites defenses
-		}
-		return -1;
-	}
+
 
 	public boolean isVoisin(Territoire origine, Territoire cible, Carte carte){
 		return carte.areVoisins(origine.getNumero(), cible.getNumero());

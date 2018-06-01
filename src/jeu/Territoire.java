@@ -32,9 +32,13 @@ public class Territoire {
 		this.armees.add(armee);
 	}
 
+	public void addAllArmee(ArrayList<Armee> unites){this.armees.addAll(unites);}
+
 	public void removeArmee(Armee armee){
 		this.armees.remove(armee);
 	}
+
+	public void removeAllArmee(ArrayList<Armee> unites){this.armees.removeAll(unites);}
 
 	public int getNumero(){return numero;}
 

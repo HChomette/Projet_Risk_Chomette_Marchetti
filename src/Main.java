@@ -1,7 +1,5 @@
 import edu.princeton.cs.introcs.StdDraw;
-import jeu.Armee;
-import jeu.Joueur;
-import jeu.Territoire;
+import jeu.*;
 import localisation.Point;
 import partie.MapLoader;
 import partie.Partie;
@@ -13,6 +11,7 @@ import visuel.PopupManager;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -24,6 +23,53 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) {
+    	/*
+    	Joueur j1 = new Joueur("Camille");
+    	Joueur j2 = new Joueur("Hector");
+
+    	//Tests
+
+		Carte carte = new Carte();
+
+    	ArrayList<Armee> attaque = new ArrayList<>();
+
+		attaque.add(UnitFactory.getArmee("Soldat"));
+		attaque.add(UnitFactory.getArmee("Canon"));
+		attaque.add(UnitFactory.getArmee("Cavalier"));
+		Territoire tAtt = new Territoire(0);
+		tAtt.addAllArmee(attaque);
+		tAtt.addArmee(UnitFactory.getArmee("Soldat"));
+		tAtt.setProprietaire(j1);
+		System.out.println(tAtt.getArmees());
+
+
+		ArrayList<Armee> defense = new ArrayList<>();
+		defense.add(UnitFactory.getArmee("Canon"));
+		defense.add(UnitFactory.getArmee("Soldat"));
+		//defense.add(UnitFactory.getArmee("Cavalier"));
+		Territoire tDef = new Territoire(1);
+		tDef.addAllArmee(defense);
+		tDef.setProprietaire(j2);
+		System.out.println(tDef.getArmees());
+
+		Region reg = new Region("Test");
+		reg.addTerritoire(tAtt);
+		reg.addTerritoire(tDef);
+
+		carte.addRegion(reg);
+		ReglesAction regles = new ReglesAction();
+		regles.setCarte(carte);
+
+		regles.attaquer(attaque,tAtt,tDef);
+		System.out.println(tAtt.getProprietaire());
+		System.out.println(tAtt.getArmees());
+		System.out.println(tDef.getProprietaire());
+		System.out.println(tDef.getArmees());
+
+
+
+		*/
+
     	double xScale = 1200f/614f;
 
     	//Chargement des fichiers
