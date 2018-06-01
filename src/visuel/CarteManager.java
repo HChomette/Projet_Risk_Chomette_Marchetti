@@ -41,6 +41,8 @@ public class CarteManager {
 
 	}
 
+
+
 	/**
 	 * Retourne la couleur correspondant au joueur de numéro donné
 	 * @param num numéro du joueur

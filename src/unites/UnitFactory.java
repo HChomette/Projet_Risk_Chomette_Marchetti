@@ -21,7 +21,7 @@ public class UnitFactory {
 			case "Cavalier" :
 				return new Cavalier();
 			case "Soldat" :
-				return new Cavalier();
+				return new Soldat();
 		}
 
 		return null; //Si aucun type ne correspond

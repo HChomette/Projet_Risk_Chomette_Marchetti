@@ -1,13 +1,17 @@
 import edu.princeton.cs.introcs.StdDraw;
+import jeu.Armee;
 import jeu.Joueur;
 import localisation.Point;
 import partie.MapLoader;
 import partie.Partie;
 import regles.ReglesAction;
+import unites.UnitFactory;
 import visuel.CarteManager;
+import visuel.PopupManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,19 +56,31 @@ public class Main {
 
 		//Répartition des territoires au différents joueurs
 		//TODO
-		//TEST
-		p.getCarte().getTerritoire(2).setProprietaire(p.getJoueur(1));
-		Point point = p.getCarte().getLocalisation(2);
-		CarteManager.dessineCercle(CarteManager.getColor(1), point.getX() * xScale, point.getY(), Point.getRadius());
-		p.getCarte().getTerritoire(23).setProprietaire(p.getJoueur(0));
-		point = p.getCarte().getLocalisation(23);
-		CarteManager.dessineCercle(CarteManager.getColor(0), point.getX() * xScale, point.getY(), Point.getRadius());
+
+		//Dépenser ses points pour acheter des soldats
+		int renforts = 9; //Test
+		ArrayList<String> types = UnitFactory.getTypes();
+		ArrayList<Integer> couts = new ArrayList<>();
+		for(String type : types){
+			Armee a = UnitFactory.getArmee(type);
+			int cout = a.getCout();
+			couts.add(cout);
+		}
+
+		while(renforts > 0){
+			String typeChoisi = PopupManager.choixType(types, couts, renforts);
+			if(typeChoisi != null) {
+				Armee choix = UnitFactory.getArmee(typeChoisi);
+				System.out.println(choix);
+				renforts -= choix.getCout();
+			}
+		}
 
 		//TEST UNIQUEMENT
 		while(true){
 			if(StdDraw.isMousePressed()){
 				System.out.println(StdDraw.mouseX() + " - " + StdDraw.mouseY());
-				System.out.println(p.getCarte().getTarget(StdDraw.mouseX(), StdDraw.mouseY()));
+				System.out.println(p.getCarte().getTarget(StdDraw.mouseX() / xScale, StdDraw.mouseY()));
 			}
 			try {
 				TimeUnit.MILLISECONDS.sleep(100);
@@ -72,6 +88,7 @@ public class Main {
 				e.printStackTrace();
 			}
 		}
+
 
 /*
 		for(Joueur j : p.getJoueurs()){
