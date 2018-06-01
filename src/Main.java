@@ -24,7 +24,10 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
     public static void main(String[] args) {
-    	double xScale = 1200f/614f;
+    	double xSize = 1200;
+    	double ySize = 614;
+    	int tailleMenu = 400;
+		double xScale = (xSize + tailleMenu)/ySize;
 
     	//Chargement des fichiers
 		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
@@ -34,12 +37,12 @@ public class Main {
 		System.out.println(p.getCarte());
 
 		//Affichage de la carte
-		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", 1200, 614);
+		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", xSize, ySize, tailleMenu);
 
 		//Dessin du cercle de chaque territoire
 		for(Point point : p.getCarte().getLocalisations()){
-			CarteManager.dessineCercle(Color.BLACK, point.getX() * xScale, point.getY(), Point.getRadius() * 1.2);
-			CarteManager.dessineCercle(Color.WHITE, point.getX() * xScale, point.getY(), Point.getRadius());
+			CarteManager.dessineCercle(Color.BLACK, (point.getX() * xScale) * (xSize / (xSize + tailleMenu)), point.getY(), Point.getRadius() * 1.2);
+			CarteManager.dessineCercle(Color.WHITE, (point.getX() * xScale) * (xSize / (xSize + tailleMenu)), point.getY(), Point.getRadius());
 		}
 
 		//Initialisation des joueurs & de leur nombre
@@ -56,17 +59,15 @@ public class Main {
 		}
 
 		//Répartition des territoires au différents joueurs
-		//TODO
 		p.distributionTerritoires();
 
 		for(Territoire t : p.getCarte().getTerritoires()){
 			Joueur j = t.getProprietaire();
 			Point point = p.getCarte().getLocalisation(t.getNumero());
-			CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)), point.getX() * xScale, point.getY(), Point.getRadius());
+			CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)), (point.getX() * xScale) * (xSize / (xSize + tailleMenu)), point.getY(), Point.getRadius());
 		}
 
 		//Dépenser ses points pour acheter des soldats
-		int renforts = 9; //Test
 		ArrayList<String> types = UnitFactory.getTypes();
 		ArrayList<Integer> couts = new ArrayList<>();
 		for(String type : types){
@@ -74,15 +75,32 @@ public class Main {
 			int cout = a.getCout();
 			couts.add(cout);
 		}
+/*
+		for(Joueur j : p.getJoueurs()){
 
-		while(renforts > 0){
-			String typeChoisi = PopupManager.choixType(types, couts, renforts);
-			if(typeChoisi != null) {
-				Armee choix = UnitFactory.getArmee(typeChoisi);
-				System.out.println(choix);
-				renforts -= choix.getCout();
-			}
-		}
+			int renforts = p.getRegles().nombreArmeesInit(p.getJoueurs().size());
+
+			ArrayList<Integer> choix = PopupManager.choixTypes(types, couts, renforts);
+
+			//Placement des armées
+		}*/
+		/*for(Joueur j : p.getJoueurs()){
+			int renforts = p.getRegles().nombreArmeesInit(p.getJoueurs().size());
+			/*
+			while(renforts > 0){
+
+				String typeChoisi = PopupManager.choixType(types, couts, renforts);
+				if(typeChoisi != null) {
+					Armee choix = UnitFactory.getArmee(typeChoisi);
+					System.out.println(choix);
+					renforts -= choix.getCout();
+				}
+
+
+			}*/
+
+
+		//}
 
 		//TEST UNIQUEMENT
 		while(true){

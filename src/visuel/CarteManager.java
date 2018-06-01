@@ -32,13 +32,15 @@ public class CarteManager {
 	 * @param xSize taille x du fichier
 	 * @param ySize taille y du fichier
 	 */
-	public static void initCarte(double xScale, double yScale, double penRadius, String path, int xSize, int ySize){
-		StdDraw.setCanvasSize(xSize, ySize);
-		StdDraw.picture(0.5, 0.5, path);
+	public static void initCarte(double xScale, double yScale, double penRadius, String path, double xSize, double ySize, double tailleMenu){
+		StdDraw.setCanvasSize((int)xSize + (int)tailleMenu, (int)ySize);
+		StdDraw.picture(0.5 * (xSize / (xSize + tailleMenu)), 0.5, path);
 		StdDraw.setPenRadius(penRadius);
 		StdDraw.setYscale(0, yScale);
 		StdDraw.setXscale(0, xScale);
 
+		StdDraw.setPenColor(Color.BLACK);
+		StdDraw.line(xSize * xScale / (xSize + tailleMenu), 0, xSize * xScale / (xSize + tailleMenu), yScale);
 	}
 
 
