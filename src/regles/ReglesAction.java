@@ -1,10 +1,7 @@
 package regles;
 
-import jeu.Carte;
+import jeu.*;
 import partie.IReglesAction;
-import jeu.Joueur;
-import jeu.Armee;
-import jeu.Territoire;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -87,9 +84,37 @@ public class ReglesAction implements IReglesAction {
 	 */
 	@Override
 	public int renforts(Joueur j) {
-		//TODO
-		return 0;
+		int r = 0;
+		//pour les territoires
+		r = r + Math.max(nombreTerritoireCarte(j)/2,2);
+		//pour les regions
+		r = r + nombreRenfortsRegion(j);
+		//pour les victoires
+		for(int i = 1; i <= j.getNbConquetes() ; i ++){
+			r = r + de(0,1) ;
+		}
+		return r;
 	}
+
+	public int nombreRenfortsRegion(Joueur j){
+		int i = 0;
+		for (Region r : this.carte.getRegions() ) {
+			if(r.estControleePar(j)){
+				i = i + (r.getTerritoires().size()/2);
+			}
+
+		}
+		return i;
+	}
+
+	public int nombreTerritoireCarte(Joueur j){
+		int i = 0;
+		for (Region r :this.carte.getRegions()) {
+			i += r.nombreTerritoires(j);
+		}
+		return i;
+	}
+
 
 	@Override
 	public void setCarte(Carte c){
