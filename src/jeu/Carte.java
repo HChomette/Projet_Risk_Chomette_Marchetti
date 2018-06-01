@@ -99,6 +99,14 @@ public class Carte {
 		return localisations.get(i);
 	}
 
+	public int nombreTotalTerritoires(Joueur j){
+		int count = 0;
+		for (Region r : this.getRegions()) {
+			count = count + r.nombreTerritoires(j);
+		}
+		return count;
+	}
+
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		for(Region r : regions) sb.append(r.toString());

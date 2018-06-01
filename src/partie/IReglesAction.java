@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Interface de règles de résolution des actions en jeu.<br/>
- * Pour changer les règles de combat, on change la classe implémentant cette interface.
+ * Pour changer les règles de combat, on change la classe en implémentant cette interface.
  */
 public interface IReglesAction {
 
@@ -33,4 +33,10 @@ public interface IReglesAction {
 	 * @param carte la carte utilisée
 	 */
 	void setCarte(Carte carte);
+
+	int nombreArmeesInit(int nbJoueur);
+
+	public boolean verifChoixArmees(Joueur j, int nbArmees);
+
+	boolean verifChoixPlacement(Joueur j, int nbUnitesRestantes);
 }

@@ -1,5 +1,8 @@
 package jeu;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
 /**
  * Classe abstraite représentant une armée sans type défini.<br/>
  * Toute unité doit posséder ces mêmes caractéristiques
@@ -104,10 +107,19 @@ public abstract class Armee {
 		this.score = score;
 	}
 
-	public void initializeScore() {
-		this.score = 0;
-	}
+	public static Comparator<Armee> StuRollno = new Comparator<Armee>() {
 
+		public int compare(Armee s1, Armee s2) {
+
+			int rollno1 = s1.getPrioriteDef();
+			int rollno2 = s2.getPrioriteDef();
+
+			/*For ascending order*/
+			return rollno1-rollno2;
+
+			/*For descending order*/
+			//return rollno2-rollno1;
+		}};
 
 
 

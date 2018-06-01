@@ -2,6 +2,7 @@ package regles;
 
 import jeu.*;
 import partie.IReglesAction;
+import unites.UnitFactory;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,14 +30,21 @@ public class ReglesAction implements IReglesAction {
 		} else {
 			if (isVoisin(origine, cible, carte)) {
 				if (cible.getProprietaire() != origine.getProprietaire()) {
-					//attaquer()
+					System.out.println("vous ne pouvez pas vous déplacer sur un territoire qui ne vous appartient pas");
 				} else {
 					this.bouger(armees,origine,cible);
 				}
 			} else {
 				System.out.println("Vous ne pouvez pas vous déplacer sur un territoire non voisin");
-				//afficher des trucs genre lol no possiblo
 			}
+		}
+	}
+
+	public void attaquer(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+		if(armees.size()>=3){
+			System.out.println("Vous ne pouvez pas attaquer avec plus de 3 unités");
+		}else{
+			ArrayList<Armee> defenseurs = new ArrayList<>();
 		}
 	}
 
@@ -86,7 +94,7 @@ public class ReglesAction implements IReglesAction {
 	public int renforts(Joueur j) {
 		int r = 0;
 		//pour les territoires
-		r = r + Math.max(nombreTerritoireCarte(j)/2,2);
+		r = r + Math.max(this.carte.nombreTotalTerritoires(j)/2,2);
 		//pour les regions
 		r = r + nombreRenfortsRegion(j);
 		//pour les victoires
@@ -107,17 +115,74 @@ public class ReglesAction implements IReglesAction {
 		return i;
 	}
 
-	public int nombreTerritoireCarte(Joueur j){
-		int i = 0;
-		for (Region r :this.carte.getRegions()) {
-			i += r.nombreTerritoires(j);
-		}
-		return i;
-	}
+
 
 
 	@Override
 	public void setCarte(Carte c){
 		carte = c;
+	}
+
+	/**
+	 * Détermine le nombre d'armées à l'initialisation
+	 * possibilité de changer les règles et les nombres d'armées
+	 * @param nbJoueurs
+	 * @return nombre d'armées
+	 */
+	public int nombreArmeesInit(int nbJoueurs){
+		switch (nbJoueurs){
+			case 2 :
+				return 40;
+
+			case 3 :
+				return 35;
+
+			case 4 :
+				return 30;
+
+			case 5 :
+				return 25;
+
+			case 6 :
+				return 20;
+		}
+		return -1;
+	}
+
+	/**
+	 *Vérifie que le joueur crée assez d'armées pour ses territoires
+	 * @param j (joueur)
+	 * @param nbArmees
+	 * @return true/false
+	 */
+	public boolean verifChoixArmees(Joueur j, int nbArmees){
+		if(nbArmees<this.carte.nombreTotalTerritoires(j)){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
+	/**
+	 *Vérifie qu'un joueur place ses armées de sorte à couvrir l'ensemble de ses territoires
+	 * @param j
+	 * @param nbUnitesRestantes
+	 * @return true/false
+	 */
+
+	public boolean verifChoixPlacement(Joueur j,int nbUnitesRestantes){
+		int count = 0;
+		for (Territoire t : carte.getTerritoires()) {
+			if(t.getProprietaire()==j){
+				if(t.getArmees().size()==0){
+					count++;
+				}
+			}
+		}
+		if(count<nbUnitesRestantes){
+			return false;
+		}else{
+			return true;
+		}
 	}
 }

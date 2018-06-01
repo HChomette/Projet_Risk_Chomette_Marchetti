@@ -61,6 +61,8 @@ public class Partie {
 		return res;
 	}
 
+
+
 	public void distributionTerritoires(){
 		ArrayList<Territoire> territoires = new ArrayList<>();
 		for (Region r :this.carte.getRegions() ) {
