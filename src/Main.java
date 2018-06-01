@@ -1,6 +1,7 @@
 import edu.princeton.cs.introcs.StdDraw;
 import jeu.Armee;
 import jeu.Joueur;
+import jeu.Territoire;
 import localisation.Point;
 import partie.MapLoader;
 import partie.Partie;
@@ -56,6 +57,13 @@ public class Main {
 
 		//Répartition des territoires au différents joueurs
 		//TODO
+		p.distributionTerritoires();
+
+		for(Territoire t : p.getCarte().getTerritoires()){
+			Joueur j = t.getProprietaire();
+			Point point = p.getCarte().getLocalisation(t.getNumero());
+			CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)), point.getX() * xScale, point.getY(), Point.getRadius());
+		}
 
 		//Dépenser ses points pour acheter des soldats
 		int renforts = 9; //Test

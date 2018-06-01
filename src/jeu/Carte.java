@@ -41,6 +41,16 @@ public class Carte {
 		return null;
 	}
 
+	public ArrayList<Territoire> getTerritoires(){
+		ArrayList<Territoire> res = new ArrayList<>();
+		for(Region r : regions){
+			for(Territoire t : r.getTerritoires())
+				res.add(t);
+		}
+
+		return res;
+	}
+
 	/**
 	 * Méthode de test pour vérifier que la matrice est symétrique
 	 */
