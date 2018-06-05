@@ -108,7 +108,7 @@ public class ReglesAction implements IReglesAction {
 				}
 				//si il ne reste plus de defenseurs, on fait une capture
 				if(cible.getArmees().size()==0){
-					capture(armees, origine, cible);
+					capturer(armees, origine, cible);
 				}
 
 			}
@@ -122,7 +122,7 @@ public class ReglesAction implements IReglesAction {
 	 * @param cible
 	 */
 
-	public void capture(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+	public void capturer(ArrayList<Armee> armees, Territoire origine, Territoire cible){
 		cible.setProprietaire(origine.getProprietaire());
 		origine.removeAllArmee(armees);
 		cible.addAllArmee(armees);
