@@ -2,7 +2,6 @@ package visuel;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class PopupManager {
@@ -30,8 +29,7 @@ public class PopupManager {
 			System.err.println(exc.getMessage());
 			System.exit(-1);
 		}
-
-		panel.add(new JLabel("Vous avez " + budget + " armées disponibles")); //TODO : Manquerait un saut de ligne
+		panel.add(new JLabel("Vous avez " + budget + " armées disponibles. ")); //TODO : Manquerait un saut de ligne
 
 		//Génération des fields et labels correspondants, et ajouts sur la fenêtre.
 		for(int i = 0; i < types.size(); i++){
@@ -88,7 +86,14 @@ public class PopupManager {
 		return res;
 	}
 
+	/**
+	 * Avertit avec une popup de la condition nécessaire
+	 */
 	public static void avertNombre(){
 		JOptionPane.showMessageDialog(null, "Vous devez créer au moins un soldat par territoire possédé.");
+	}
+
+	public static void askPlacement(String nomJoueur, String nomUnit){
+		JOptionPane.showMessageDialog(null, nomJoueur + ", veuillez placer votre " + nomUnit);
 	}
 }

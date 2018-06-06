@@ -38,7 +38,7 @@ public interface IReglesAction {
 
 	int nombreArmeesInit(int nbJoueur);
 
-	public boolean verifChoixArmees(Joueur j, int nbArmees);
+	boolean verifChoixArmees(Joueur j, int nbArmees);
 
 	boolean verifChoixPlacement(Joueur j, int nbUnitesRestantes);
 }
