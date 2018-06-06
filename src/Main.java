@@ -71,17 +71,25 @@ public class Main {
 
 
     	*/
-    	double xScale = 1200f/614f;
+    	//double xScale = 1200f/614f;
+		double xScale = 537f/799f;
 
     	//Chargement des fichiers
+		/*
 		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
 		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence", 42));
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
+		*/
+
+		Partie p = new Partie(MapLoader.loadMap("resources/territoire2.json"), new ReglesAction());
+		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence2", 48));
+		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
 
 		System.out.println(p.getCarte());
 
 		//Affichage de la carte
-		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", 1200, 614);
+		//CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", 1200, 614);
+		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", 537, 799);
 
 		//Dessin du cercle de chaque territoire
 		for(Point point : p.getCarte().getLocalisations()){
@@ -112,6 +120,7 @@ public class Main {
 			CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)), point.getX() * xScale, point.getY(), Point.getRadius());
 		}
 
+		/*
 		//Dépenser ses points pour acheter des soldats
 		int renforts = 9; //Test
 		ArrayList<String> types = UnitFactory.getTypes();
@@ -130,12 +139,16 @@ public class Main {
 				renforts -= choix.getCout();
 			}
 		}
+		*/
 
 		//TEST UNIQUEMENT
 		while(true){
 			if(StdDraw.isMousePressed()){
 				System.out.println(StdDraw.mouseX() + " - " + StdDraw.mouseY());
 				System.out.println(p.getCarte().getTarget(StdDraw.mouseX() / xScale, StdDraw.mouseY()));
+
+				//System.out.println(p.getCarte().getTarget(StdDraw.mouseX(), StdDraw.mouseY()));
+
 			}
 			try {
 				TimeUnit.MILLISECONDS.sleep(100);
