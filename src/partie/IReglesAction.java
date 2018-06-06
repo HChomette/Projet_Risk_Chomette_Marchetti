@@ -21,6 +21,8 @@ public interface IReglesAction {
 	 */
 	void deplacer(ArrayList<Armee> armees, Territoire origine, Territoire cible);
 
+	void attaquer(ArrayList<Armee> armees, Territoire origine, Territoire cible);
+
 	/**
 	 * Calcule la quantité d'armées de renforts reçues par un joueur en début de tour
 	 * @param j le joueur concerné

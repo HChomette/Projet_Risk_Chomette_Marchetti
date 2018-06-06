@@ -107,7 +107,7 @@ public abstract class Armee {
 		this.score = score;
 	}
 
-	public static Comparator<Armee> StuRollno = new Comparator<Armee>() {
+	public static Comparator<Armee> SortByPrioriteDefense = new Comparator<Armee>() {
 
 		public int compare(Armee s1, Armee s2) {
 
@@ -120,6 +120,25 @@ public abstract class Armee {
 			/*For descending order*/
 			//return rollno2-rollno1;
 		}};
+
+	public static Comparator<Armee> SortAttaque = new Comparator<Armee>() {
+
+		public int compare(Armee s1, Armee s2) {
+
+			int rollno1 = s1.getScore();
+			int rollno2 = s2.getScore();
+
+			/*For ascending order*/
+			//return rollno1-rollno2;
+
+			/*For descending order*/
+			if(rollno1 == rollno2){
+				return s1.getPrioriteAtt() - s2.getPrioriteAtt();
+			}else {
+				return rollno2 - rollno1;
+			}
+
+			}};
 
 
 

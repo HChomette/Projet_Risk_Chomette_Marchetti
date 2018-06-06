@@ -1,0 +1,12 @@
+[
+  {"name" : "The North","territoires" : 13},
+  {"name" : "The Iron Islands", "territoires" : 2},
+  {"name" : "The Westerlands", "territoires" : 5},
+  {"name" : "The Riverlands", "territoires" : 5},
+  {"name" : "The Vale Of Arryn", "territoires" : 4},
+  {"name" : "The Crownlands", "territoires" : 4},
+  {"name" : "The Reach", "territoires" : 7},
+  {"name" : "Dorne", "territoires" : 4},
+  {"name" : "The Stormlands", "territoires" : 4}
+
+]

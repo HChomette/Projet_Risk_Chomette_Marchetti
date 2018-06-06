@@ -43,4 +43,9 @@ public class Joueur {
 	public int getNbConquetes() {
 		return nbConquetes;
 	}
+
+
+	public String toString() {
+		return this.nom;
+	}
 }
