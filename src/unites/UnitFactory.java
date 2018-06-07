@@ -22,6 +22,8 @@ public class UnitFactory {
 				return new Cavalier();
 			case "Soldat" :
 				return new Soldat();
+			case "Licorne" :
+				return new Licorne();
 		}
 
 		return null; //Si aucun type ne correspond
@@ -37,6 +39,7 @@ public class UnitFactory {
 		res.add("Canon");
 		res.add("Cavalier");
 		res.add("Soldat");
+		res.add("Licorne");
 		return res;
 	}
 }

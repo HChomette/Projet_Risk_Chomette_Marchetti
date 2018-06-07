@@ -2,7 +2,6 @@ package regles;
 
 import jeu.*;
 import partie.IReglesAction;
-import unites.UnitFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,7 +167,7 @@ public class ReglesAction implements IReglesAction {
 	public int renforts(Joueur j) {
 		int r = 0;
 		//pour les territoires
-		r = r + Math.max(this.carte.nombreTotalTerritoires(j)/2,2);
+		r = r + Math.max(carte.nombreTotalTerritoires(j)/2,2);
 		//pour les regions
 		r = r + nombreRenfortsRegion(j);
 		//pour les victoires
@@ -180,7 +179,7 @@ public class ReglesAction implements IReglesAction {
 
 	public int nombreRenfortsRegion(Joueur j){
 		int i = 0;
-		for (Region r : this.carte.getRegions() ) {
+		for (Region r : carte.getRegions() ) {
 			if(r.estControleePar(j)){
 				i = i + (r.getTerritoires().size()/2);
 			}
@@ -230,11 +229,7 @@ public class ReglesAction implements IReglesAction {
 	 * @return true/false
 	 */
 	public boolean verifChoixArmees(Joueur j, int nbArmees){
-		if(nbArmees<this.carte.nombreTotalTerritoires(j)){
-			return false;
-		}else{
-			return true;
-		}
+		return !(nbArmees<carte.nombreTotalTerritoires(j));
 	}
 
 	/**
@@ -253,10 +248,6 @@ public class ReglesAction implements IReglesAction {
 				}
 			}
 		}
-		if(count<nbUnitesRestantes){
-			return false;
-		}else{
-			return true;
-		}
+		return count <= nbUnitesRestantes;
 	}
 }

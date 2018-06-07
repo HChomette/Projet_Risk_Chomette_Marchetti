@@ -51,6 +51,16 @@ public class Carte {
 		return res;
 	}
 
+	public ArrayList<Territoire> getVoisins(Territoire terr){
+		ArrayList<Territoire> res = new ArrayList<>();
+		for(Region r : regions){
+			for(Territoire t : r.getTerritoires()){
+				if(areVoisins(t.getNumero(), terr.getNumero())) res.add(t);
+			}
+		}
+		return res;
+	}
+
 	/**
 	 * Méthode de test pour vérifier que la matrice est symétrique
 	 */
