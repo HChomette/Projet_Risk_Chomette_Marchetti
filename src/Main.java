@@ -12,6 +12,7 @@ import visuel.PopupManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -23,13 +24,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-	private static double xSize = 1200;
-	private static double ySize = 614;
-	private static int nbTerr = 42;
+	//private static double xSize = 1200;
+	//private static double ySize = 614;
+	//private static int nbTerr = 42;
 	//Valeurs pour la 2e carte
-	//private static double xSize = 537;
-	//private static double ySize = 799;
-	//private static int nbTerr = 48;
+	private static double xSize = 537;
+	private static double ySize = 799;
+	private static int nbTerr = 48;
 	private static int tailleMenu = 400;
 	private static double xScale = (xSize + tailleMenu)/ySize;
 	private static double facteur = xSize / ySize; //Utilisé pour placer les points sur la carte et pas le menu
@@ -37,13 +38,13 @@ public class Main {
     public static void main(String[] args) {
 
     	//Chargement des fichiers
-		Partie p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
-		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence", nbTerr));
-		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
+		Partie p = new Partie(MapLoader.loadMap("resources/territoire2.json"), new ReglesAction());
+		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence2", nbTerr));
+		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
 		p.getRegles().setCarte(p.getCarte());
 
 		//Affichage de la carte
-		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", xSize, ySize, tailleMenu);
+		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", xSize, ySize, tailleMenu);
 		CarteManager.initMenu(tailleMenu, xSize, ySize, xScale, 1);
 
 		//Dessin du cercle de chaque territoire
@@ -86,8 +87,10 @@ public class Main {
 			int cout = a.getCout();
 			couts.add(cout);
 		}
-
+/*
 		for(Joueur j : p.getJoueurs()){
+
+			CarteManager.tourJoueur(p.getJoueurs().indexOf(j));
 
 			int renforts = p.getRegles().nombreArmeesInit(p.getJoueurs().size());
 
@@ -95,7 +98,7 @@ public class Main {
 			ArrayList<Integer> choix;
 			do{
 				total = 0;
-				PopupManager.avertNombre();
+				PopupManager.alert("Vous devez créer au moins un soldat par territoire possédé.");
 				choix = PopupManager.choixTypes(types, couts, renforts);
 				for(Integer integer : choix) total += integer;
 			}while(!p.getRegles().verifChoixArmees(j, total));
@@ -114,8 +117,8 @@ public class Main {
 				Territoire t;
 				int empty = 1;
 				do {
-					PopupManager.askPlacement(j.getNom(), armeesInit.get(i).getNom());
-					pos = waitClic();
+					PopupManager.alert(j.getNom() + ", veuillez placer votre " + armeesInit.get(i).getNom());
+					pos = waitClic(-1);
 					t = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
 					if(t != null) empty = t.getArmees().size() == 0?0:1;
 				}while(t == null || t.getProprietaire() != j || !p.getRegles().verifChoixPlacement(j, armeesInit.size() - i - empty));
@@ -125,54 +128,112 @@ public class Main {
 				CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)),
 						point.getX() * facteur, point.getY(), Point.getRadius(), t.getArmees().size());
 			}
-
-		}
-
-
-
-		//}
-
-		//TEST UNIQUEMENT
-		double[] coord = waitClic();
-		System.out.println("Pass : " + CarteManager.isPass(coord[0], coord[1]));
-		System.out.println(coord[0] / facteur + " - " + coord[1]);
-		System.out.println(p.getCarte().getTarget(coord[0] / facteur, coord[1]));
-
-/*
-		for(Joueur j : p.getJoueurs()){
-			//TODO : Boucle de jeu
-
-			//Début de tour : réception des renforts
-			int nbRenforts = 0; //Valeur calculée
-
-			ArrayList<String> catalogue = UnitFactory.getTypes();
-
-
-			//Sélection des unités à créer
-			while(nbRenforts > 0){
-
-				System.out.println(catalogue); //Sera fait en visuel, pas en console
-				String choix = null; //Choix déterminé à partir d'un menu visuel
-
-				Territoire cible = null; //Territoire cible choisi au clic
-
-				cible.addArmee(UnitFactory.getArmee(choix)); //Ajout du type d'armée choisi sur le territoire cible
-			}
-
-			//Déplacements et attaque
-			//Boucle jusqu'à fin du tour par le joueur
 		}*/
+
+
+		//Boucle de jeu
+		boolean fini = false;
+		while(!fini) {
+			for (Joueur j : p.getJoueurs()) {
+				CarteManager.tourJoueur(p.getJoueurs().indexOf(j)); //Changement du tour de joueur affiché
+				PopupManager.alert("Tour du joueur " + j.getNom());
+
+				//Début de tour : réception des renforts
+				int renforts = p.getRegles().renforts(j); //Valeur calculée
+				PopupManager.alert("Choisissez vos renforts de début de tour");
+				ArrayList<Integer> choix = PopupManager.choixTypes(types, couts, renforts);
+
+				ArrayList<Armee> armeesInit = new ArrayList<>();
+				//Création des armées
+				for(int i = 0; i < choix.size(); i++) {
+					for (int k = 0; k < choix.get(i); k++) {
+						armeesInit.add(UnitFactory.getArmee(types.get(i)));
+					}
+				}
+				//Placement des renforts
+				double[]pos;
+				for(int i = 0; i < armeesInit.size(); i++){
+					Territoire t;
+					do {
+						PopupManager.alert(j.getNom() + ", veuillez placer votre " + armeesInit.get(i).getNom());
+						pos = waitClic(-1);
+						t = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
+					}while(t == null || t.getProprietaire() != j);
+
+					t.addArmee(armeesInit.get(i));
+					Point point = p.getCarte().getLocalisation(t.getNumero());
+					CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)),
+							point.getX() * facteur, point.getY(), Point.getRadius(), t.getArmees().size());
+				}
+				boolean end = false;
+				while (!end) {
+					pos = waitClic(KeyEvent.VK_I);
+					Territoire cible = p.getCarte().getTarget(pos[0]/facteur, pos[1]);
+					if (CarteManager.isPass(pos[0], pos[1])) end = true; //Clic sur fin du tour
+					else if (cible != null && cible.getProprietaire() == j && cible.getArmees().size() > 1){ //Clic sur un territoire possédé
+						StdDraw.save("temp.png"); //Sauvegarde de la carte avant d'highlight les voisins
+						ArrayList<Territoire> voisins = p.getCarte().getVoisins(cible);
+						for(Territoire t : voisins){
+							Point point = p.getCarte().getLocalisation(t.getNumero());
+							if(t.getProprietaire() == j){
+								CarteManager.highlight(Color.GREEN, point.getX() * facteur, point.getY(), Point.getRadius() * 1.3); //Territoires amis
+							} else {
+								CarteManager.highlight(Color.RED, point.getX() * facteur, point.getY(), Point.getRadius() * 1.3); //Territoires ennemis
+							}
+						}
+						//Cancel highlight après action
+						//Choix de la cible de l'action
+						boolean done = false;
+						while(!done){
+							pos = waitClic(-1);
+							Territoire cible2 = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
+							if(cible2 != null && voisins.contains(cible2)){
+								//Popup de sélection des armées utilisées
+								//Attaque ou déplacement
+								//Reload de la map puis coloration de l'éventuel changement sur origine & cible
+								//Check de victoire
+								Joueur gagnant = p.checkVictoireDestruction();
+								if(gagnant != null){
+									PopupManager.alert(gagnant.getNom() + " a gagné la partie !");
+									fini = true;
+								}
+							}
+						}
+
+					} else if (pos[0] == -1 && pos[1] == -1){ //Informations du territoire
+						Territoire cibleTouche = p.getCarte().getTarget(StdDraw.mouseX() / facteur, StdDraw.mouseY());
+						if(cibleTouche != null) {
+							ArrayList<String> infos = new ArrayList<>();
+							for (Armee a : cibleTouche.getArmees()){
+								infos.add(a.getNom() + " : " + a.getMouvement() + " mouvements restants");
+							}
+							PopupManager.list(infos, "Informations");
+						}
+					}
+				}
+			}
+		}
 
     }
 
 	/**
 	 * Attends le prochain clic, et renvoie ses coordonnées
-	 * @return double[0] le x, double[1] le y
+	 * @param keyCode le code de la touche demandée, ou -1 si on ne veut aucune touche
+	 * @return double[0] le x, double[1] le y, ou -1 et -1 quand on a pressé la touche demandée à la place
 	 */
-	private static double[] waitClic(){
+	private static double[] waitClic(int keyCode){
 		while(true){
 			if(StdDraw.isMousePressed()){
 				double[] res = new double[]{StdDraw.mouseX(), StdDraw.mouseY()};
+				try {
+					TimeUnit.MILLISECONDS.sleep(130); /*On fait passer du temps pour éviter de compter
+					Plusieurs fois le clic*/
+				} catch (InterruptedException e){
+					e.printStackTrace();
+				}
+				return res;
+			} else if (keyCode != -1 && StdDraw.isKeyPressed(keyCode)){
+				double[] res = new double[]{-1, -1};
 				try {
 					TimeUnit.MILLISECONDS.sleep(130);
 				} catch (InterruptedException e){

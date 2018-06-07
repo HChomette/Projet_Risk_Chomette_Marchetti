@@ -2,6 +2,8 @@ package visuel;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class PopupManager {
@@ -87,13 +89,58 @@ public class PopupManager {
 	}
 
 	/**
-	 * Avertit avec une popup de la condition nécessaire
+	 * Affiche un simple message d'information à l'utilisateur
+	 * @param message Le message à afficher
 	 */
-	public static void avertNombre(){
-		JOptionPane.showMessageDialog(null, "Vous devez créer au moins un soldat par territoire possédé.");
+	public static void alert(String message){
+		JOptionPane.showMessageDialog(null, message);
 	}
 
-	public static void askPlacement(String nomJoueur, String nomUnit){
-		JOptionPane.showMessageDialog(null, nomJoueur + ", veuillez placer votre " + nomUnit);
+	/**
+	 * Affiche une liste dans une fenêtre
+	 * @param list La liste des textes à afficher
+	 * @param title Le titre de la fenêtre
+	 */
+	public static void list(ArrayList<String> list, String title){
+		JFrame frame = new JFrame(title);
+
+		DefaultListModel toDisplay = new DefaultListModel();
+		for(String s : list) toDisplay.addElement(s);
+
+		JList jlist = new JList(toDisplay);
+		jlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		jlist.setVisibleRowCount(5);
+		frame.add(jlist);
+		frame.pack();
+		frame.setSize(frame.getWidth() + 200, Math.max(frame.getHeight(), 350));
+		frame.setVisible(true);
+	}
+
+	/**
+	 * Affiche une liste dans une fenêtre et renvoie
+	 * @param list
+	 * @param title
+	 * @return
+	 */
+	public static ArrayList<Integer> selectList(ArrayList<String> list, String title){
+		JFrame frame = new JFrame(title);
+
+		DefaultListModel toDisplay = new DefaultListModel();
+		for(String s : list) toDisplay.addElement(s);
+
+		JList jlist = new JList(toDisplay);
+		jlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		jlist.setVisibleRowCount(5);
+		frame.add(jlist);
+		frame.pack();
+		frame.setSize(frame.getWidth() + 200, Math.max(frame.getHeight(), 350));
+		JButton bouton = new JButton("Valider");
+		bouton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		frame.setVisible(true);
 	}
 }

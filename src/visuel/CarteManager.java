@@ -128,4 +128,9 @@ public class CarteManager {
 	public static Color getColor(int num){
 		return couleursJoueur[num];
 	}
+
+	public static void highlight(Color color, double x, double y, double radius){
+		StdDraw.setPenColor(color);
+		StdDraw.circle(x, y, radius);
+	}
 }
