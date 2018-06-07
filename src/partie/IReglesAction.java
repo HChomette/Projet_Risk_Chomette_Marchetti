@@ -41,4 +41,6 @@ public interface IReglesAction {
 	boolean verifChoixArmees(Joueur j, int nbArmees);
 
 	boolean verifChoixPlacement(Joueur j, int nbUnitesRestantes);
+
+	int de(int min, int max);
 }
