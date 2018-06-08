@@ -41,6 +41,7 @@ public class IA {
                 countCav++;
 
             }
+            System.out.println("salut");
         }
         if(n>=15) {
             for (int i = 0; i < n; i = i + 15) {

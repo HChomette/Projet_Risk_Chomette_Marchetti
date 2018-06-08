@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class CarteManager {
 
-	private final static Color[] couleursJoueur = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.PINK};
+	private final static Color[] couleursJoueur = {Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.MAGENTA, Color.PINK};
 
 	private static double leftMenu;
 	private static double rightMenu;
