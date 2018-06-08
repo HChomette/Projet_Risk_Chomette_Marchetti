@@ -204,7 +204,7 @@ public class Main {
 										TimeUnit.MILLISECONDS.sleep(100); //Pour ne pas check la condition trop souvent
 									} catch(Exception e){}
 								} //On attend que l'utilisateur ait appuyé sur le bouton
-								PopupManager.setCallbackButton(false); //On reset l'état du bouton. //TODO taille bouton
+								PopupManager.setCallbackButton(false); //On reset l'état du bouton. 
 								ArrayList<Armee> unitesChoisies = new ArrayList<>(); //Liste des unités choisies par le joueur
 								for(Integer index : stackChoisi){
 									unitesChoisies.add(cible.getArmees().get(index));
