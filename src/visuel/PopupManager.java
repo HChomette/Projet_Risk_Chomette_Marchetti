@@ -2,6 +2,7 @@ package visuel;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -135,8 +136,6 @@ public class PopupManager {
 		JList jlist = new JList(toDisplay);
 		jlist.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		jlist.setVisibleRowCount(5);
-		frame.add(jlist);
-		frame.pack();
 		JButton bouton = new JButton("Valider");
 		bouton.addActionListener(new ActionListener() {
 			@Override
@@ -150,13 +149,12 @@ public class PopupManager {
 		});
 		frame.setSize(frame.getWidth() + 200, Math.max(frame.getHeight(), 350));
 		bouton.setBounds(frame.getWidth() / 2, frame.getHeight() / 2, 100, 50);
-		frame.setLayout(null);
+		frame.setLayout(new GridLayout(1,0));
+		frame.add(jlist);
 		frame.add(bouton);
-		frame.setVisible(true);
+		frame.pack();
 
-		System.out.println(frame.getWidth() + " - " + frame.getHeight());
-		System.out.println(bouton.getWidth() + " - " + bouton.getHeight());
-		System.out.println(bouton.getX() + " - " + bouton.getY());
+		frame.setVisible(true);
 		return res; //La liste est vide au moment du renvoi. On attends le callback du bouton pour agir dans l'appelant
 	}
 

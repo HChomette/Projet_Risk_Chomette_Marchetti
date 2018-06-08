@@ -66,6 +66,8 @@ public class CarteManager {
 		StdDraw.setPenRadius(penRadius);
 		StdDraw.setYscale(0, yScale);
 		StdDraw.setXscale(0, xScale);
+		Font f = new Font ("Monospaced", Font.BOLD, 18);
+		StdDraw.setFont(f);
 
 		StdDraw.setPenColor(Color.BLACK);
 		StdDraw.line(xSize * xScale / (xSize + tailleMenu), 0, xSize * xScale / (xSize + tailleMenu), yScale);
