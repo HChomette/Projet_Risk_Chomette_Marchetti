@@ -142,5 +142,6 @@ public class PopupManager {
 			}
 		});
 		frame.setVisible(true);
+		return null;
 	}
 }
