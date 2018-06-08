@@ -26,28 +26,23 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-	//private static double xSize = 1200;
-	//private static double ySize = 614;
-	//private static int nbTerr = 42;
-	//Valeurs pour la 2e carte
-	private static double xSize = 537;
-	private static double ySize = 799;
-	private static int nbTerr = 48;
+	private static double xSize ;
+	private static double ySize ;
+	private static int nbTerr ;
 	private static int tailleMenu = 400;
 	private static double xScale = (xSize + tailleMenu)/ySize;
-	private static double facteur = xSize / ySize; //Utilisé pour placer les points sur la carte et pas le menu
+	private static double facteur ; //Utilisé pour placer les points sur la carte et pas le menu
+	private static Partie p;
 
     public static void main(String[] args) {
 
+    	String[] choixCarte = {"Terre","Westeros"};
+		boolean isMonde = ((String)(JOptionPane.showInputDialog(JOptionPane.getRootFrame(),
+				"Sur quel plateau voulez-vous jouer ?", "Choix de la carte",
+				JOptionPane.PLAIN_MESSAGE, null, choixCarte,"Terre"))).equals("Terre");
+		if(isMonde){ Main.setCarte("Terre");} else {Main.setCarte("Westeros");}
     	//Chargement des fichiers
-		Partie p = new Partie(MapLoader.loadMap("resources/territoire2.json"), new ReglesAction());
-		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence2", nbTerr));
-		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
-		p.getRegles().setCarte(p.getCarte());
 
-		//Affichage de la carte
-		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", xSize, ySize, tailleMenu);
-		CarteManager.initMenu(tailleMenu, xSize, ySize, xScale, 1);
 
 		//Dessin du cercle de chaque territoire
 		for(Point point : p.getCarte().getLocalisations()){
@@ -317,6 +312,42 @@ public class Main {
 				return res;
 			}
 
+		}
+	}
+
+	public static void setCarte(String choix){
+		switch (choix){
+			case "Terre" :
+				xSize = 1200;
+				ySize = 614;
+				nbTerr = 42;
+				xScale = (xSize + tailleMenu)/ySize;
+				facteur = xSize / ySize;
+				p = new Partie(MapLoader.loadMap("resources/territoire.json"), new ReglesAction());
+				p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence", nbTerr));
+				p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations"));
+				p.getRegles().setCarte(p.getCarte());
+
+				//Affichage de la carte
+				CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap.png", xSize, ySize, tailleMenu);
+				CarteManager.initMenu(tailleMenu, xSize, ySize, xScale, 1);
+				break;
+
+			case "Westeros" :
+				xSize = 537;
+				ySize = 799;
+				nbTerr = 48;
+				xScale = (xSize + tailleMenu)/ySize;
+				facteur = xSize / ySize;
+				p = new Partie(MapLoader.loadMap("resources/territoire2.json"), new ReglesAction());
+				p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence2", nbTerr));
+				p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
+				p.getRegles().setCarte(p.getCarte());
+
+				//Affichage de la carte
+				CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", xSize, ySize, tailleMenu);
+				CarteManager.initMenu(tailleMenu, xSize, ySize, xScale, 1);
+				break;
 		}
 	}
 }
