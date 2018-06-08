@@ -57,7 +57,6 @@ public class Main {
 		}
 
 		//Initialisation des joueurs & de leur nombre
-		//TODO : passer dans popupmanager
 		String[] choices = {"2", "3", "4", "5", "6"};
 
 		int res = Integer.parseInt((String)JOptionPane.showInputDialog(JOptionPane.getRootFrame(), "Combien de joueurs ?", "Initialisation", JOptionPane.PLAIN_MESSAGE, null, choices, "2"));
@@ -141,6 +140,9 @@ public class Main {
 						pos = waitClic(-1);
 						t = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
 						if (t != null) empty = t.getArmees().size() == 0 ? 0 : 1;
+						if(!p.getRegles().verifChoixPlacement(j, armeesInit.size() - i - empty)){
+							PopupManager.alert("Vous ne pouvez pas placer votre unité ici. Vous devez avoir au moins une unité par territoire");
+						}
 					}
 					while (t == null || t.getProprietaire() != j || !p.getRegles().verifChoixPlacement(j, armeesInit.size() - i - empty));
 
