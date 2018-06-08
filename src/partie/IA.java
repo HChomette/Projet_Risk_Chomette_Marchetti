@@ -28,18 +28,24 @@ public class IA {
         int countCav = 0;
         int countLic = 0;
         ArrayList<Armee> armee = new ArrayList<>();
-        for(int i=0; i<n; i=i+7){
-            armee.add(UnitFactory.getArmee("Canon"));
-            countCan ++;
+        if(n>=7) {
+            for (int i = 0; i < n; i = i + 7) {
+                armee.add(UnitFactory.getArmee("Canon"));
+                countCan++;
+            }
         }
-        for(int i=0; i<n; i=i+3){
-            armee.add(UnitFactory.getArmee("Cavalier"));
-            countCav ++;
+        if(n>=3) {
+            for (int i = 0; i < n; i = i + 3) {
+                armee.add(UnitFactory.getArmee("Cavalier"));
+                countCav++;
 
+            }
         }
-        for(int i=0; i<n; i=i+15){
-            armee.add(UnitFactory.getArmee("Licorne"));
-            countLic++;
+        if(n>=15) {
+            for (int i = 0; i < n; i = i + 15) {
+                armee.add(UnitFactory.getArmee("Licorne"));
+                countLic++;
+            }
         }
 
         n = countCan * 7 + countCav * 3 + countLic *15 ;
