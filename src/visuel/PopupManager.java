@@ -143,7 +143,6 @@ public class PopupManager {
 			public void actionPerformed(ActionEvent e) {
 				for(Integer selected : jlist.getSelectedIndices()){
 					res.add(selected);
-					//TODO : Régler taille du bouton
 				}
 				callbackButton = true;
 				frame.dispose();
@@ -157,6 +156,7 @@ public class PopupManager {
 
 		System.out.println(frame.getWidth() + " - " + frame.getHeight());
 		System.out.println(bouton.getWidth() + " - " + bouton.getHeight());
+		System.out.println(bouton.getX() + " - " + bouton.getY());
 		return res; //La liste est vide au moment du renvoi. On attends le callback du bouton pour agir dans l'appelant
 	}
 

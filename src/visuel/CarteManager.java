@@ -3,6 +3,7 @@ package visuel;
 import edu.princeton.cs.introcs.StdDraw;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -19,6 +20,8 @@ public class CarteManager {
 	private static double yPass;
 	private static double yTurn;
 	private static double yLegende;
+
+	private static int compteur = 0; //Compteur de sauvegardes
 
 	/**
 	 * Dessine un cercle de territoire.
@@ -134,11 +137,21 @@ public class CarteManager {
 		StdDraw.circle(x, y, radius);
 	}
 
+	/**
+	 * StdDraw utilise un cache. On doit don
+	 * @param path
+	 */
 	public static void save (String path){
-		StdDraw.save(path);
+		//StdDraw utilise un cache. On doit donc changer le nom de la sauvegarde pour ne pas réutiliser la même image.
+		if(compteur > 0){
+			File file = new File(path + (compteur - 1) + ".png"); //On supprime l'ancienne sauvegarde
+			file.delete();
+		}
+		StdDraw.save(path + compteur + ".png");
+		compteur++;
 	}
 
 	public static void load (String path, double xScale){
-		StdDraw.picture(0.5 * xScale, 0.5, path);
+		StdDraw.picture(0.5 * xScale, 0.5, path + (compteur - 1) + ".png");
 	}
 }

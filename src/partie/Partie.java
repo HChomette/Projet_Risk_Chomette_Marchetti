@@ -17,6 +17,7 @@ public class Partie {
 	private Carte carte;
 	private ArrayList<Joueur> joueurs;
 	private IReglesAction regles;
+	private ArrayList<Joueur> ia;
 
 	//////////////////
 	// CONSTRUCTORS //
@@ -26,6 +27,7 @@ public class Partie {
 		this.carte = carte;
 		this.regles = regles;
 		this.joueurs = new ArrayList<>();
+		this.ia = new ArrayList<>();
 	}
 
 	/////////////
@@ -38,6 +40,18 @@ public class Partie {
 	 */
 	public void addJoueur(Joueur j){
 		this.joueurs.add(j);
+	}
+
+	/**
+	 * Ajoute un joueur dans la liste des IA
+	 * @param j le joueur IA
+	 */
+	public void setIA(Joueur j){
+		this.ia.add(j);
+	}
+
+	public boolean isIA(Joueur j){
+		return ia.contains(j);
 	}
 
 	/**

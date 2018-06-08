@@ -44,8 +44,6 @@ public class Main {
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
 		p.getRegles().setCarte(p.getCarte());
 
-		p.getCarte().checkAdjacence(); //TODO
-
 		//Affichage de la carte
 		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", xSize, ySize, tailleMenu);
 		CarteManager.initMenu(tailleMenu, xSize, ySize, xScale, 1);
@@ -67,7 +65,15 @@ public class Main {
 			String name = null;
 			while(name == null) {
 				name = JOptionPane.showInputDialog("Entrez le nom du joueur " + (i + 1));
-				p.addJoueur(new Joueur(name));
+				Joueur jCourant = new Joueur(name);
+				p.addJoueur(jCourant);
+				String[] ouiNon = {"Oui", "Non"};
+
+				boolean isIA = ((String)(JOptionPane.showInputDialog(JOptionPane.getRootFrame(),
+						"Combien de joueurs ?", "Initialisation",
+						JOptionPane.PLAIN_MESSAGE, null, ouiNon, "Non"))).equals("Oui");
+				if(isIA) p.setIA(jCourant);
+
 				nomsJoueurs.add(name);
 			}
 		}
@@ -175,7 +181,7 @@ public class Main {
 					Territoire cible = p.getCarte().getTarget(pos[0]/facteur, pos[1]);
 					if (CarteManager.isPass(pos[0], pos[1])) end = true; //Clic sur fin du tour
 					else if (cible != null && cible.getProprietaire() == j && cible.getArmees().size() > 1){ //Clic sur un territoire possédé
-						CarteManager.save("temp.png"); //Sauvegarde de la carte avant d'highlight les voisins
+						CarteManager.save("temp"); //Sauvegarde de la carte avant d'highlight les voisins
 						ArrayList<Territoire> voisins = p.getCarte().getVoisins(cible);
 						for(Territoire t : voisins){
 							Point point = p.getCarte().getLocalisation(t.getNumero());
@@ -192,7 +198,7 @@ public class Main {
 							pos = waitClic(-1);
 							Territoire cible2 = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
 							if(cible2 != null && voisins.contains(cible2)){
-								CarteManager.load("temp.png", xScale); //TODO : Problème de save
+								CarteManager.load("temp", xScale); //TODO : Problème de save
 								//Popup de sélection des armées utilisées
 								ArrayList<String> options  = new ArrayList<>();
 								for(Armee a : cible.getArmees()){
