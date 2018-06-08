@@ -3,6 +3,7 @@ import jeu.Armee;
 import jeu.Joueur;
 import jeu.Territoire;
 import localisation.Point;
+import partie.IA;
 import partie.MapLoader;
 import partie.Partie;
 import regles.ReglesAction;
@@ -96,48 +97,59 @@ public class Main {
 			int cout = a.getCout();
 			couts.add(cout);
 		}
-/*
+
 		for(Joueur j : p.getJoueurs()){
 
 			CarteManager.tourJoueur(p.getJoueurs().indexOf(j));
 
 			int renforts = p.getRegles().nombreArmeesInit(p.getJoueurs().size());
 
-			int total;
-			ArrayList<Integer> choix;
-			do{
-				total = 0;
-				PopupManager.alert("Vous devez créer au moins un soldat par territoire possédé.");
-				choix = PopupManager.choixTypes(types, couts, renforts);
-				for(Integer integer : choix) total += integer;
-			}while(!p.getRegles().verifChoixArmees(j, total));
+			if(p.isIA(j)){
+				IA.renforts(j, renforts);
+				for(Territoire t : p.getCarte().territoiresJoueur(j)){
+					Point point = p.getCarte().getLocalisation(t.getNumero());
+					CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)),
+							point.getX() * facteur, point.getY(), Point.getRadius(), t.getArmees().size());
+				}
+			} else {
 
-			ArrayList<Armee> armeesInit = new ArrayList<>();
-			//Création des armées
-			for(int i = 0; i < choix.size(); i++){
-				for(int k = 0; k < choix.get(i); k++){
-					armeesInit.add(UnitFactory.getArmee(types.get(i)));
+				int total;
+				ArrayList<Integer> choix;
+				do {
+					total = 0;
+					PopupManager.alert("Vous devez créer au moins un soldat par territoire possédé.");
+					choix = PopupManager.choixTypes(types, couts, renforts);
+					for (Integer integer : choix) total += integer;
+				} while (!p.getRegles().verifChoixArmees(j, total));
+
+				ArrayList<Armee> armeesInit = new ArrayList<>();
+				//Création des armées
+				for (int i = 0; i < choix.size(); i++) {
+					for (int k = 0; k < choix.get(i); k++) {
+						armeesInit.add(UnitFactory.getArmee(types.get(i)));
+					}
+				}
+
+				double[] pos;
+				//Placement des armées
+				for (int i = 0; i < armeesInit.size(); i++) {
+					Territoire t;
+					int empty = 1;
+					do {
+						PopupManager.alert(j.getNom() + ", veuillez placer votre " + armeesInit.get(i).getNom());
+						pos = waitClic(-1);
+						t = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
+						if (t != null) empty = t.getArmees().size() == 0 ? 0 : 1;
+					}
+					while (t == null || t.getProprietaire() != j || !p.getRegles().verifChoixPlacement(j, armeesInit.size() - i - empty));
+
+					t.addArmee(armeesInit.get(i));
+					Point point = p.getCarte().getLocalisation(t.getNumero());
+					CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)),
+							point.getX() * facteur, point.getY(), Point.getRadius(), t.getArmees().size());
 				}
 			}
-
-			double[] pos;
-			//Placement des armées
-			for(int i = 0; i < armeesInit.size(); i++){
-				Territoire t;
-				int empty = 1;
-				do {
-					PopupManager.alert(j.getNom() + ", veuillez placer votre " + armeesInit.get(i).getNom());
-					pos = waitClic(-1);
-					t = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
-					if(t != null) empty = t.getArmees().size() == 0?0:1;
-				}while(t == null || t.getProprietaire() != j || !p.getRegles().verifChoixPlacement(j, armeesInit.size() - i - empty));
-
-				t.addArmee(armeesInit.get(i));
-				Point point = p.getCarte().getLocalisation(t.getNumero());
-				CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)),
-						point.getX() * facteur, point.getY(), Point.getRadius(), t.getArmees().size());
-			}
-		}*/
+		}
 
 
 		//Boucle de jeu
