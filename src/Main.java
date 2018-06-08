@@ -13,6 +13,7 @@ import visuel.PopupManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +43,8 @@ public class Main {
 		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence2", nbTerr));
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
 		p.getRegles().setCarte(p.getCarte());
+
+		p.getCarte().checkAdjacence(); //TODO
 
 		//Affichage de la carte
 		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", xSize, ySize, tailleMenu);
@@ -171,7 +174,7 @@ public class Main {
 					Territoire cible = p.getCarte().getTarget(pos[0]/facteur, pos[1]);
 					if (CarteManager.isPass(pos[0], pos[1])) end = true; //Clic sur fin du tour
 					else if (cible != null && cible.getProprietaire() == j && cible.getArmees().size() > 1){ //Clic sur un territoire possédé
-						StdDraw.save("temp.png"); //Sauvegarde de la carte avant d'highlight les voisins
+						CarteManager.save("temp.png"); //Sauvegarde de la carte avant d'highlight les voisins
 						ArrayList<Territoire> voisins = p.getCarte().getVoisins(cible);
 						for(Territoire t : voisins){
 							Point point = p.getCarte().getLocalisation(t.getNumero());
@@ -188,9 +191,57 @@ public class Main {
 							pos = waitClic(-1);
 							Territoire cible2 = p.getCarte().getTarget(pos[0] / facteur, pos[1]);
 							if(cible2 != null && voisins.contains(cible2)){
+								CarteManager.load("temp.png", xScale); //TODO : Problème de save
 								//Popup de sélection des armées utilisées
-								//Attaque ou déplacement
-								//Reload de la map puis coloration de l'éventuel changement sur origine & cible
+								ArrayList<String> options  = new ArrayList<>();
+								for(Armee a : cible.getArmees()){
+									options.add(a.getNom() + " - " + a.getMouvement() + " mouvements restants.");
+									//TODO : pas proposer unités sans mouvement
+								}
+								ArrayList<Integer> stackChoisi = PopupManager.selectList(options, "Sélection");
+								while(!PopupManager.isCallbackButton()){
+									try {
+										TimeUnit.MILLISECONDS.sleep(100); //Pour ne pas check la condition trop souvent
+									} catch(Exception e){}
+								} //On attend que l'utilisateur ait appuyé sur le bouton
+								PopupManager.setCallbackButton(false); //On reset l'état du bouton. 
+								ArrayList<Armee> unitesChoisies = new ArrayList<>(); //Liste des unités choisies par le joueur
+								for(Integer index : stackChoisi){
+									unitesChoisies.add(cible.getArmees().get(index));
+								}
+								//Attaque ou déplacement & coloration résultat
+								boolean validChoice = true;
+								if(cible2.getProprietaire() != j){
+									if(unitesChoisies.size() > 3){
+										validChoice = false;
+										PopupManager.alert("3 armées maximum pour attaquer. Veuillez recommencer votre choix.");
+									} else {
+										p.getRegles().attaquer(unitesChoisies, cible, cible2);
+										done = true;
+									}
+								} else {
+									for(Armee a : unitesChoisies){
+										if (a.getMouvement() < 1){
+											validChoice = false;
+											PopupManager.alert("Votre " + a.getNom() + " n'a plus de mouvement disponible. Veuillez reommencer votre choix.");
+										}
+									}
+									if (validChoice){
+										p.getRegles().deplacer(unitesChoisies, cible, cible2);
+										done = true;
+									}
+								}
+
+								if(validChoice){
+									Point point = p.getCarte().getLocalisation(cible.getNumero());
+									CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(j)),
+											point.getX() * facteur, point.getY(), Point.getRadius(), cible.getArmees().size());
+
+									Point point2 = p.getCarte().getLocalisation(cible2.getNumero());
+									CarteManager.dessineCercle(CarteManager.getColor(p.getJoueurs().indexOf(cible2.getProprietaire())),
+											point2.getX() * facteur, point2.getY(), Point.getRadius(), cible2.getArmees().size());
+								}
+
 								//Check de victoire
 								Joueur gagnant = p.checkVictoireDestruction();
 								if(gagnant != null){
