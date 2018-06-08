@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class PopupManager {
 
+	private static boolean callbackButton = false;
+
 	/**
 	 * Ouvre une popup pour demander à l'utilisateur ses choix lors de la création initiale de ses armées
 	 * @param types les types d'armée
@@ -117,12 +119,14 @@ public class PopupManager {
 	}
 
 	/**
-	 * Affiche une liste dans une fenêtre et renvoie
-	 * @param list
-	 * @param title
-	 * @return
+	 * Affiche une liste dans une fenêtre et renvoie l'index des éléments choisis.<br/>
+	 * Doit appeler isCallbackButton() pour vérifier si le bouton a été pressé.
+	 * @param list La liste des options à afficher
+	 * @param title Le titre de la fenêtre
+	 * @return La liste des index choisis.
 	 */
 	public static ArrayList<Integer> selectList(ArrayList<String> list, String title){
+		ArrayList<Integer> res = new ArrayList<>();
 		JFrame frame = new JFrame(title);
 
 		DefaultListModel toDisplay = new DefaultListModel();
@@ -133,14 +137,34 @@ public class PopupManager {
 		jlist.setVisibleRowCount(5);
 		frame.add(jlist);
 		frame.pack();
-		frame.setSize(frame.getWidth() + 200, Math.max(frame.getHeight(), 350));
 		JButton bouton = new JButton("Valider");
 		bouton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				for(Integer selected : jlist.getSelectedIndices()){
+					res.add(selected);
+					//TODO : Régler taille du bouton
+				}
+				callbackButton = true;
+				frame.dispose();
 			}
 		});
+		frame.setSize(frame.getWidth() + 200, Math.max(frame.getHeight(), 350));
+		bouton.setBounds(frame.getWidth() / 2, frame.getHeight() / 2, 100, 50);
+		frame.setLayout(null);
+		frame.add(bouton);
 		frame.setVisible(true);
+		System.out.println(frame.getWidth() + " - " + frame.getHeight());
+		System.out.println(bouton.getWidth() + " - " + bouton.getHeight());
+		return res; //La liste est vide au moment du renvoi. On attends le callback du bouton pour agir dans l'appelant
+	}
+
+
+	public static boolean isCallbackButton() {
+		return callbackButton;
+	}
+
+	public static void setCallbackButton(boolean callbackButton) {
+		PopupManager.callbackButton = callbackButton;
 	}
 }

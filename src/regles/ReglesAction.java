@@ -27,7 +27,7 @@ public class ReglesAction implements IReglesAction {
 	@Override
 	public void deplacer(ArrayList<Armee> armees, Territoire origine, Territoire cible) {
 		int taille = armees.size();
-		if (origine.getArmees().size() - armees.size() <= 1) {
+		if (origine.getArmees().size() - armees.size() < 1) {
 			System.out.println("il doit rester au moins 1 armée sur le territoire d'origine");
 		} else {
 			if (isVoisin(origine, cible, carte)) {
@@ -72,7 +72,7 @@ public class ReglesAction implements IReglesAction {
 				}
 				//lancer des des
 				for(Armee armee:armees){
-					armee.setScore(/*de(armee.getPuissanceMin(),armee.getPuissanceMax())*/1);
+					armee.setScore(de(armee.getPuissanceMin(),armee.getPuissanceMax()));
 					System.out.println("score attaque :"+armee.getScore());
 				}
 				for(Armee armee : defenseurs){
@@ -91,7 +91,7 @@ public class ReglesAction implements IReglesAction {
 					cible.removeArmee(defenseurs.get(0));
 				}else{
 					System.out.println("attaquant mort");
-					cible.removeArmee(armees.get(0));
+					origine.removeArmee(armees.get(0));
 					armees.remove(armees.get(0));
 				}
 				//comparaison des deuxieme scores si il y en a
@@ -101,10 +101,11 @@ public class ReglesAction implements IReglesAction {
 						cible.removeArmee(defenseurs.get(1));
 					}else{
 						System.out.println("attaquant mort");
-						cible.removeArmee(defenseurs.get(1));
+						origine.removeArmee(armees.get(1));
 						armees.remove(armees.get(1));
 					}
 				}
+				//TODO : Il y en avait pas 3 ?
 				//si il ne reste plus de defenseurs, on fait une capture
 				if(cible.getArmees().size()==0){
 					capturer(armees, origine, cible);

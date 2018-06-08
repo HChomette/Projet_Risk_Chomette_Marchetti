@@ -133,4 +133,12 @@ public class CarteManager {
 		StdDraw.setPenColor(color);
 		StdDraw.circle(x, y, radius);
 	}
+
+	public static void save (String path){
+		StdDraw.save(path);
+	}
+
+	public static void load (String path, double xScale){
+		StdDraw.picture(0.5 * xScale, 0.5, path);
+	}
 }
