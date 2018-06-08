@@ -132,6 +132,12 @@ public class Carte {
 		return count;
 	}
 
+	/**
+	 * Liste des territoires d'un joueur
+	 * @param j joueur
+	 * @return
+	 */
+
 	public ArrayList<Territoire> territoiresJoueur(Joueur j){
 		ArrayList<Territoire> res = new ArrayList<>();
 		for (Region r : this.getRegions()) {

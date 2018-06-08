@@ -4,6 +4,7 @@ import jeu.Armee;
 import jeu.Carte;
 import jeu.Joueur;
 import jeu.Territoire;
+import unites.UnitFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,15 +24,38 @@ public class IA {
 
     public static void renforts(Joueur joueur, int renforts){
         int n = renforts/4;
-        //creer le max d'unite de chaque categorie possible
-        //le reste = soldats
+        int countCan = 0;
+        int countCav = 0;
+        int countLic = 0;
+        ArrayList<Armee> armee = new ArrayList<>();
+        for(int i=0; i<n; i=i+7){
+            armee.add(UnitFactory.getArmee("Canon"));
+            countCan ++;
+        }
+        for(int i=0; i<n; i=i+3){
+            armee.add(UnitFactory.getArmee("Cavalier"));
+            countCav ++;
 
-        //ajouter renforts aux territoires les plus faibles
+        }
+        for(int i=0; i<n; i=i+15){
+            armee.add(UnitFactory.getArmee("Licorne"));
+            countLic++;
+        }
 
+        n = countCan * 7 + countCav * 3 + countLic *15 ;
+        for(int i=n; i<renforts; i++){
+            armee.add(UnitFactory.getArmee("Soldat"));
+        }
+        ArrayList<Territoire> territoires = carte.territoiresJoueur(joueur);
+        Collections.sort(territoires, Territoire.SortByArmySize);
+        Collections.sort(armee,Armee.SortByPower);
+        for(int i=0; i<armee.size(); i++){
+            territoires.get(i%territoires.size()).addArmee(armee.get(i));
+        }
     }
 
     public static void jouer(Joueur joueur){
-        for (Territoire t:carte.getTerritoires()) {
+        for (Territoire t:carte.territoiresJoueur(joueur)) {
             ArrayList<Territoire> voisins = new ArrayList<>();
             voisins.addAll(carte.getVoisins(t));
             Collections.sort(voisins, Territoire.SortByArmySize);
@@ -47,8 +71,8 @@ public class IA {
                         regles.attaquer(new ArrayList<Armee>(Arrays.asList(t.getArmees().get(0))),t,cible);
                     }
                 }
-
             }
+            voisins.clear();
         }
 
     }

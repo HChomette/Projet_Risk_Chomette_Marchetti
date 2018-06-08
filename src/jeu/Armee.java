@@ -121,6 +121,23 @@ public abstract class Armee {
 		}};
 
 
+	public static Comparator<Armee> SortByPower = new Comparator<Armee>() {
+
+		public int compare(Armee s1, Armee s2) {
+
+			int rollno1 = s1.getPuissanceMax();
+			int rollno2 = s2.getPuissanceMax();
+
+
+			/*For ascending order*/
+			//return rollno1-rollno2;
+
+			/*For descending order*/
+
+			return rollno1 - rollno2;
+
+		}};
+
 	public static Comparator<Armee> SortForIa = new Comparator<Armee>() {
 
 		public int compare(Armee s1, Armee s2) {
