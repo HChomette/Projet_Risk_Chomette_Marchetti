@@ -23,6 +23,7 @@ public class IA {
     }
 
     public static void renforts(Joueur joueur, int renforts){
+        /*
         int n = renforts/4;
         int countCan = 0;
         int countCav = 0;
@@ -59,6 +60,18 @@ public class IA {
         for(int i=0; i<armee.size(); i++){
             territoires.get(i%territoires.size()).addArmee(armee.get(i));
         }
+        */
+        ArrayList<Armee> armees = new ArrayList<>();
+        for(int i = 0; i < renforts; i++){
+        	armees.add(UnitFactory.getArmee("Soldat"));
+		}
+		ArrayList<Territoire> territoires = carte.territoiresJoueur(joueur);
+
+
+		for(int i=0; i<armees.size(); i++){
+			Collections.sort(territoires, Territoire.SortByArmySize);
+			territoires.get(0).addArmee(armees.get(i));
+		}
     }
 
     public static void jouer(Joueur joueur){
@@ -66,7 +79,11 @@ public class IA {
             ArrayList<Territoire> voisins = new ArrayList<>();
             voisins.addAll(carte.getVoisins(t));
             Collections.sort(voisins, Territoire.SortByArmySize);
-            Territoire cible = voisins.get(0);
+			Territoire cible = null;
+            for(Territoire voisin : voisins){
+            	if(voisin.getProprietaire() != joueur) cible = voisin;
+			}
+            if(cible == null) continue;
             Collections.sort(t.getArmees(), Armee.SortForIa);
             while(t.getArmees().size()>2 && t.getArmees().get(0).getMouvement()>0){
                 if(t.getArmees().size()>=5 && t.getArmees().get(2).getMouvement()>0){
