@@ -143,6 +143,7 @@ public class Main {
 
 				//Début de tour : réception des renforts
 				int renforts = p.getRegles().renforts(j); //Valeur calculée
+				j.resetConquetes();
 				PopupManager.alert("Choisissez vos renforts de début de tour");
 				ArrayList<Integer> choix = PopupManager.choixTypes(types, couts, renforts);
 
@@ -204,7 +205,7 @@ public class Main {
 										TimeUnit.MILLISECONDS.sleep(100); //Pour ne pas check la condition trop souvent
 									} catch(Exception e){}
 								} //On attend que l'utilisateur ait appuyé sur le bouton
-								PopupManager.setCallbackButton(false); //On reset l'état du bouton. 
+								PopupManager.setCallbackButton(false); //On reset l'état du bouton.
 								ArrayList<Armee> unitesChoisies = new ArrayList<>(); //Liste des unités choisies par le joueur
 								for(Integer index : stackChoisi){
 									unitesChoisies.add(cible.getArmees().get(index));
@@ -260,6 +261,11 @@ public class Main {
 							}
 							PopupManager.list(infos, "Informations");
 						}
+					}
+				}
+				for(Territoire tOwned : p.getCarte().territoiresJoueur(j)){
+					for(Armee a :tOwned.getArmees()){
+						a.setMouvement(a.getMouvementMax());
 					}
 				}
 			}
