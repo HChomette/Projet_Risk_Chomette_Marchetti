@@ -41,6 +41,10 @@ public class Carte {
 		return null;
 	}
 
+	/**
+	 * recuperer tous les territoires de la carte
+	 * @return
+	 */
 	public ArrayList<Territoire> getTerritoires(){
 		ArrayList<Territoire> res = new ArrayList<>();
 		for(Region r : regions){
@@ -50,6 +54,12 @@ public class Carte {
 
 		return res;
 	}
+
+	/**
+	 * Liste des voisins d'un territoire
+	 * @param terr
+	 * @return
+	 */
 
 	public ArrayList<Territoire> getVoisins(Territoire terr){
 		ArrayList<Territoire> res = new ArrayList<>();
@@ -109,6 +119,11 @@ public class Carte {
 		return localisations.get(i);
 	}
 
+	/**
+	 * Nombre total de territoire d'un joueur
+	 * @param j
+	 * @return
+	 */
 	public int nombreTotalTerritoires(Joueur j){
 		int count = 0;
 		for (Region r : this.getRegions()) {

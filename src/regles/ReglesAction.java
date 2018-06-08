@@ -130,9 +130,17 @@ public class ReglesAction implements IReglesAction {
 		for(Armee a :armees){
 			a.setMouvement(a.getMouvement() - 1);
 		}
+		origine.getProprietaire().addConquete();
 		System.out.println("territoire capturé");
 	}
 
+
+	/**
+	 *bouguer une armee d'un territoire a l'autre
+	 * @param armees
+	 * @param origine
+	 * @param cible
+	 */
 	public void bouger(ArrayList<Armee> armees, Territoire origine, Territoire cible){
 		for (Armee armee : armees) {
 			if (armee.getMouvement() > 0) {
@@ -178,6 +186,10 @@ public class ReglesAction implements IReglesAction {
 		return r;
 	}
 
+	/**
+	 * @param j joueur
+	 * @return nb renforts d'un joueur j en fct des regions controllees
+	 */
 	public int nombreRenfortsRegion(Joueur j){
 		int i = 0;
 		for (Region r : carte.getRegions() ) {

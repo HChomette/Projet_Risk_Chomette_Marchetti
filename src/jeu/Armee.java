@@ -120,6 +120,7 @@ public abstract class Armee {
 			//return rollno2-rollno1;
 		}};
 
+
 	public static Comparator<Armee> SortForIa = new Comparator<Armee>() {
 
 		public int compare(Armee s1, Armee s2) {
