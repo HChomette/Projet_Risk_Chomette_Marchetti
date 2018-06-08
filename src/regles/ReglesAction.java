@@ -49,6 +49,7 @@ public class ReglesAction implements IReglesAction {
 	 * @param cible
 	 */
 	public void attaquer(ArrayList<Armee> armees, Territoire origine, Territoire cible){
+		if(origine.getProprietaire() == cible.getProprietaire()) System.out.println("wala");
 		for(Armee a : armees){
 			if(a.getMouvement()<=0){
 				System.out.println("cette armée n'a pas assez de points de mouvement pour se déplacer");
