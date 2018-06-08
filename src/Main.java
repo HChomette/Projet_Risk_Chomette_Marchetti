@@ -44,6 +44,7 @@ public class Main {
 		p.getCarte().setAdjacence(MapLoader.loadAdjacence("resources/adjacence2", nbTerr));
 		p.getCarte().setLocalisations(MapLoader.loadLocalisations("resources/localizations2"));
 		p.getRegles().setCarte(p.getCarte());
+		IA.setCarte(p.getCarte());
 
 		//Affichage de la carte
 		CarteManager.initCarte(xScale, 1, 0.005, "resources/riskmap2.jpg", xSize, ySize, tailleMenu);
@@ -71,7 +72,7 @@ public class Main {
 				String[] ouiNon = {"Oui", "Non"};
 
 				boolean isIA = ((String)(JOptionPane.showInputDialog(JOptionPane.getRootFrame(),
-						"Combien de joueurs ?", "Initialisation",
+						"Est-ce une IA ?", "Initialisation",
 						JOptionPane.PLAIN_MESSAGE, null, ouiNon, "Non"))).equals("Oui");
 				if(isIA) p.setIA(jCourant);
 
