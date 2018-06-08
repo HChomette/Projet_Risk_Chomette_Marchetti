@@ -117,6 +117,16 @@ public class Carte {
 		return count;
 	}
 
+	public ArrayList<Territoire> territoiresJoueur(Joueur j){
+		ArrayList<Territoire> res = new ArrayList<>();
+		for (Region r : this.getRegions()) {
+			for(Territoire t : r.getTerritoires()){
+				if(t.getProprietaire() == j) res.add(t);
+			}
+		}
+		return res;
+	}
+
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		for(Region r : regions) sb.append(r.toString());
