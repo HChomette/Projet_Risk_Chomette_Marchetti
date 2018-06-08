@@ -159,6 +159,8 @@ public class Main {
 		boolean fini = false;
 		while(!fini) {
 			for (Joueur j : p.getJoueurs()) {
+
+
 				if(fini) break;
 				CarteManager.tourJoueur(p.getJoueurs().indexOf(j)); //Changement du tour de joueur affiché
 				PopupManager.alert("Tour du joueur " + j.getNom());
@@ -303,6 +305,7 @@ public class Main {
 							point.getX() * facteur, point.getY(), Point.getRadius(), t.getArmees().size());
 				}
 
+
 				//Check de victoire
 				Joueur gagnant = p.checkVictoireDestruction();
 				if (gagnant != null) {
@@ -315,6 +318,11 @@ public class Main {
 						a.setMouvement(a.getMouvementMax());
 					}
 				}
+
+				if(p.getCarte().nombreTotalTerritoires(p.getJoueurs().get((p.getJoueurs().indexOf(j)+1)%p.getJoueurs().size()))==0){
+					p.getJoueurs().remove(p.getJoueurs().get((p.getJoueurs().indexOf(j)+1)%p.getJoueurs().size()));
+				}
+
 			}
 		}
 
