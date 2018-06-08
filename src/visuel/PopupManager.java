@@ -154,6 +154,7 @@ public class PopupManager {
 		frame.setLayout(null);
 		frame.add(bouton);
 		frame.setVisible(true);
+
 		System.out.println(frame.getWidth() + " - " + frame.getHeight());
 		System.out.println(bouton.getWidth() + " - " + bouton.getHeight());
 		return res; //La liste est vide au moment du renvoi. On attends le callback du bouton pour agir dans l'appelant
@@ -166,5 +167,6 @@ public class PopupManager {
 
 	public static void setCallbackButton(boolean callbackButton) {
 		PopupManager.callbackButton = callbackButton;
+
 	}
 }

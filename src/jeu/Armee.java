@@ -120,18 +120,25 @@ public abstract class Armee {
 			//return rollno2-rollno1;
 		}};
 
-	public static Comparator<Armee> SortByPower = new Comparator<Armee>() {
+	public static Comparator<Armee> SortForIa = new Comparator<Armee>() {
 
 		public int compare(Armee s1, Armee s2) {
 
 			int rollno1 = s1.getPuissanceMax();
 			int rollno2 = s2.getPuissanceMax();
 
+			int roll1 = s1.getMouvement();
+			int roll2 = s2.getMouvement();
+
 			/*For ascending order*/
 			//return rollno1-rollno2;
 
 			/*For descending order*/
-			return rollno2-rollno1;
+			if(roll1 == roll2){
+				return rollno1 - rollno2;
+			}else {
+				return roll2 - roll1;
+			}
 		}};
 
 	public static Comparator<Armee> SortAttaque = new Comparator<Armee>() {
